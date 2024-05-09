@@ -5,7 +5,7 @@ return {
         "AstroNvim/astrocore",
     },
     config = function()
-        local maps = { n={}, i={}, t={}, v={} }
+        local maps = { n={}, i={}, t={} }
         local astro = require "astrocore"
 
         -- keymaps from astronvim
@@ -51,8 +51,9 @@ return {
         -- keymaps from astronvim
 
         for mode, mode_maps  in pairs(maps) do
-            for key, map in pairs(mode_maps) do
-                vim.keymap.set(mode, '<Leader>' .. key, map[1], {desc = map.desc})
+            for astro_key, map in pairs(mode_maps) do
+                local key = string.sub(astro_key, 1, #'<Leader>') == '<Leader>' and '<Leader>' .. astro_key or astro_key
+                vim.keymap.set(mode, key, map[1], {desc = map.desc})
             end
         end
     end,
