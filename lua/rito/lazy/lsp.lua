@@ -24,27 +24,28 @@ return {
 
         require("fidget").setup({})
         require("mason").setup()
+
+        local lspconfig = require("lspconfig")
+
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
                 "gopls",
+                "tsserver", -- lsp sever
             },
             handlers = {
                 function(server_name) -- default handler (optional)
-
-                    require("lspconfig")[server_name].setup {
+                    lspconfig[server_name].setup {
                         capabilities = capabilities
                     }
                 end,
-
                 ["lua_ls"] = function()
-                    local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
                         capabilities = capabilities,
                         settings = {
                             Lua = {
-				    runtime = { version = "Lua 5.1" },
+                                runtime = { version = "Lua 5.1" },
                                 diagnostics = {
                                     globals = { "vim", "it", "describe", "before_each", "after_each" },
                                 }
@@ -52,7 +53,18 @@ return {
                         }
                     }
                 end,
-            }
+                ["tsserver"] = function()
+                    lspconfig.tsserver.setup {
+                        capabilities = capabilities,
+                        init_options = {
+                            preferences = {
+                                importModuleSpecifierPreference = 'relative',
+                                importModuleSpecifierEnding = 'minimal',
+                            },
+                        },
+                    }
+                end
+            },
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
