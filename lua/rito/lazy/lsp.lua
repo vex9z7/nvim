@@ -55,6 +55,11 @@ return {
                 end,
                 ["tsserver"] = function()
                     lspconfig.tsserver.setup {
+                        on_attach = function(client)
+                            -- disable the formatting from tsserver
+                            client.server_capabilities.documentFormattingProvider = false
+                            client.server_capabilities.documentRangeFormattingProvider = false
+                        end,
                         capabilities = capabilities,
                         init_options = {
                             preferences = {
@@ -63,7 +68,7 @@ return {
                             },
                         },
                     }
-                end
+                end,
             },
         })
 
