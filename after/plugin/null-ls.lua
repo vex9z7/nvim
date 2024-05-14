@@ -5,7 +5,6 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 local code_actions = null_ls.builtins.code_actions
-local hover = null_ls.builtins.hover
 
 local CSPELL_FALLBACK_CONFIG_PATH = vim.fn.expand("~/.config/nvim/null-ls-config-fallbacks/cspell.json")
 local CSPELL_FALLBACK_EXTRA_ARGS = { "--config", CSPELL_FALLBACK_CONFIG_PATH }
@@ -74,7 +73,6 @@ null_ls.setup({
 				end,
 			},
 		}),
-		hover.dictionary,
 	},
 	on_attach = function(client, bufnr)
 		-- auto format
