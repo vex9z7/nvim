@@ -15,7 +15,7 @@ vim.opt.smartcase = true
 vim.opt.smartindent = true
 -- vim.opt.autoindent = true
 
--- awalys use the clipboard
+-- always use the clipboard
 vim.opt.clipboard:append("unnamedplus")
 
 vim.opt.wrap = false
