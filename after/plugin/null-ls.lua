@@ -22,6 +22,7 @@ null_ls.setup({
 			condition = function()
 				return vim.fn.executable("cspell") > 0
 			end,
+			extra_filetypes = {},
 			extra_args = CSPELL_FALLBACK_EXTRA_ARGS,
 			diagnostic_config = {
 				-- see :help vim.diagnostic.config()
@@ -41,6 +42,7 @@ null_ls.setup({
 			condition = function()
 				return vim.fn.executable("cspell") > 0
 			end,
+			extra_filetypes = {},
 			extra_args = CSPELL_FALLBACK_EXTRA_ARGS,
 			config = {
 				-- see https://github.com/jose-elias-alvarez/null-ls.nvim/blob/0010ea927ab7c09ef0ce9bf28c2b573fc302f5a7/lua/null-ls/builtins/code_actions/cspell.lua#L68
