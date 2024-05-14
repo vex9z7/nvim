@@ -23,7 +23,23 @@ null_ls.setup({
 		diagnostics.eslint_d,
 
 		-- English
-		diagnostics.write_good,
+		diagnostics.write_good.with({
+			condition = function()
+				return vim.fn.executable("write-good") > 0
+			end,
+			diagnostic_config = {
+				-- see :help vim.diagnostic.config()
+				underline = true,
+				virtual_text = true,
+				signs = false,
+				update_in_insert = false,
+				severity_sort = true,
+			},
+			diagnostics_postprocess = function(diagnostic)
+				-- see :help diagnostic-severity
+				diagnostic.severity = vim.diagnostic.severity.WARN
+			end,
+		}),
 
 		diagnostics.cspell.with({
 			condition = function()
