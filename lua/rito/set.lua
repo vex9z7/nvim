@@ -18,7 +18,8 @@ vim.opt.smartindent = true
 -- always use the clipboard
 vim.opt.clipboard:append("unnamedplus")
 
-vim.opt.wrap = false
+vim.opt.wrap = true
+vim.opt.linebreak = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
