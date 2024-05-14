@@ -4,6 +4,9 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
+local code_actions = null_ls.builtins.code_actions
+
+local CSPELL_CONFIG_FALLBACK = vim.fn.expand('~/.config/nvim/null-ls-config-fallbacks/cspell.json')
 
 null_ls.setup({
   sources = {
@@ -14,6 +17,31 @@ null_ls.setup({
 
     diagnostics.eslint_d,
 
+    diagnostics.cspell.with({
+      extra_args = { '--config', CSPELL_CONFIG_FALLBACK },
+      condition = function()
+        return vim.fn.executable('cspell') > 0
+      end,
+      diagnostic_config = {
+        -- see :help vim.diagnostic.config()
+        underline = true,
+        virtual_text = false,
+        signs = false,
+        update_in_insert = false,
+        severity_sort = true,
+      },
+      diagnostics_postprocess = function(diagnostic)
+        -- see :help diagnostic-severity
+        diagnostic.severity = vim.diagnostic.severity.INFO
+      end,
+    }),
+
+    code_actions.cspell.with({
+      extra_args = { '--config', CSPELL_CONFIG_FALLBACK },
+      condition = function()
+        return vim.fn.executable('cspell') > 0
+      end,
+    }),
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then

@@ -1,0 +1,7 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": ["nvim", "vim", "itl", "mujin"],
+  "flagWords": ["hte"],
+  "allowCompoundWords": true
+}
