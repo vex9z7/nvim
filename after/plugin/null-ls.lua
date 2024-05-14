@@ -12,6 +12,9 @@ local CSPELL_FALLBACK_EXTRA_ARGS = { "--config", CSPELL_FALLBACK_CONFIG_PATH }
 
 null_ls.setup({
 	sources = {
+		-- lua
+		formatting.stylua,
+
 		-- javascript, typescript, react, json
 		formatting.prettierd.with({
 			prefer_local = "node_modules/.bin",
