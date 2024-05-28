@@ -27,17 +27,21 @@ function qmllintSourceFactory()
 			command = "qmllint",
 			args = { "$FILENAME" },
 			to_stdin = false,
-			format = "raw",
+			format = "line",
 			from_stderr = true,
 			to_temp_file = true,
 
-			on_output = h.diagnostics.from_errorformat(
-				table.concat({
-					"%trror: %f:%l:%c: %m",
-					"%tarning: %f:%l:%c: %m",
-				}, ","),
-				"qmllint"
-			),
+			on_output = function(line, _params)
+				local errorType, message, row, col = line:match("(%a+):%s(.-) at (%d+):(%d+)")
+				if errorType then
+					return {
+						row = row,
+						col = col,
+						message = message,
+						severity = 2,
+					}
+				end
+			end,
 		},
 		factory = h.generator_factory,
 	})
