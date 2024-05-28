@@ -30,6 +30,7 @@ return {
 
 		require("mason-lspconfig").setup({
 			ensure_installed = {
+				"stylelint_lsp",
 				"lua_ls",
 				"rust_analyzer",
 				"gopls",
