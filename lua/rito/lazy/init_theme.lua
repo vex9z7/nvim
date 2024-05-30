@@ -1,2 +1,1 @@
-local theme = require("rito.lazy.themes.nvimgelion")
-return theme
+return require("rito.lazy.themes.nvimgelion")
