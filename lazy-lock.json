@@ -1,6 +1,7 @@
 {
   "ChatGPT.nvim": { "branch": "main", "commit": "df53728e05129278d6ea26271ec086aa013bed90" },
   "LuaSnip": { "branch": "master", "commit": "03c8e67eb7293c404845b3982db895d59c0d1538" },
+  "aerial.nvim": { "branch": "master", "commit": "75de06f8edbd0006997a19b760045753d4f6693c" },
   "astrocore": { "branch": "main", "commit": "3b60036e92ba000dddb727fe1fff0ca283f37106" },
   "astrolsp": { "branch": "main", "commit": "fd2666a283af98182b1e8b01c85656071093a825" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },

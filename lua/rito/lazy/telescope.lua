@@ -12,7 +12,8 @@ return {
 			build = "make",
 		},
 		"nvim-treesitter/nvim-treesitter",
-		"AstroNvim/astrocore",
+		"rcarriga/nvim-notify",
+		"stevearc/aerial.nvim",
 	},
 
 	config = function()
@@ -22,7 +23,6 @@ return {
 		local maps = { n = {}, i = {}, t = {}, v = {} }
 
 		local astro = require("astrocore")
-		local is_available = astro.is_available
 		-- keymaps from astronvim
 		if vim.fn.executable("git") == 1 then
 			maps.n["<Leader>gb"] = {
@@ -116,14 +116,12 @@ return {
 			end,
 			desc = "Find man",
 		}
-		if is_available("nvim-notify") then
-			maps.n["<Leader>fn"] = {
-				function()
-					require("telescope").extensions.notify.notify()
-				end,
-				desc = "Find notifications",
-			}
-		end
+		maps.n["<Leader>fn"] = {
+			function()
+				require("telescope").extensions.notify.notify()
+			end,
+			desc = "Find notifications",
+		}
 		maps.n["<Leader>fo"] = {
 			function()
 				builtin.oldfiles()
@@ -162,11 +160,7 @@ return {
 		end
 		maps.n["<Leader>ls"] = {
 			function()
-				if is_available("aerial.nvim") then
-					require("telescope").extensions.aerial.aerial()
-				else
-					builtin.lsp_document_symbols()
-				end
+				require("telescope").extensions.aerial.aerial()
 				builtin.lsp_document_symbols()
 			end,
 			desc = "Search symbols",
