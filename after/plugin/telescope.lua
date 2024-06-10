@@ -21,6 +21,5 @@ require("telescope").setup({
 			},
 		},
 		path_display = { "truncate" },
-		sorting_strategy = "ascending",
 	},
 })
