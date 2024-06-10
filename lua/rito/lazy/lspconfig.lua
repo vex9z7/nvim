@@ -67,6 +67,14 @@ return {
 							preferences = {
 								importModuleSpecifierPreference = "relative",
 								importModuleSpecifierEnding = "minimal",
+								-- inlay hints
+								includeInlayParameterNameHints = "all",
+								includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayVariableTypeHints = true,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
 							},
 						},
 					})
