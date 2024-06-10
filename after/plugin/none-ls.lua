@@ -53,8 +53,9 @@ null_ls.setup({
 		formatting.prettierd.with({
 			prefer_local = "node_modules/.bin",
 		}),
-		formatting.eslint_d,
-		diagnostics.eslint_d,
+		-- see https://github.com/nvimtools/none-ls-extras.nvim/tree/main
+		require("none-ls.diagnostics.eslint_d"),
+		require("none-ls.formatting.eslint_d"),
 
 		-- qml
 		formatting.qmlformat,
