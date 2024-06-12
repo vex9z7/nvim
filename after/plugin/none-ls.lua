@@ -58,6 +58,8 @@ local function setup()
 			require("none-ls.diagnostics.eslint_d"),
 			require("none-ls.formatting.eslint_d"),
 
+			-- shell
+			formatting.shfmt,
 			-- qml
 			formatting.qmlformat,
 			qmllintSourceFactory().with({
