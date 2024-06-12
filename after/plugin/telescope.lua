@@ -3,8 +3,13 @@ local function setup()
 	local ratio = 1.618
 
 	require("telescope").setup({
+		pickers = {
+			colorscheme = {
+				enable_preview = true,
+			},
+		},
 		defaults = {
-			git_worktrees = require("astrocore").config.git_worktrees,
+			-- git_worktrees = require("astrocore").config.git_worktrees,
 			layout_strategy = "flex",
 			layout_config = {
 				width = (ratio - 1),
