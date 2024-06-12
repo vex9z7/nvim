@@ -17,12 +17,9 @@ return {
 	},
 
 	config = function()
-		require("telescope").setup({})
-
 		local builtin = require("telescope.builtin")
 		local maps = { n = {}, i = {}, t = {}, v = {} }
 
-		local astro = require("astrocore")
 		-- keymaps from astronvim
 		if vim.fn.executable("git") == 1 then
 			maps.n["<Leader>gb"] = {

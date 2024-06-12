@@ -99,7 +99,6 @@ local function setup()
 					group = augroup,
 					buffer = bufnr,
 					callback = function()
-						print("asdadasd")
 						vim.lsp.buf.format({
 							async = false,
 							filter = function(c)
