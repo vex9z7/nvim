@@ -1,3 +1,28 @@
+function attach_auto_formatter(client, bufnr, opts)
+  opts = vim.F.if_nil(opts, {})
+  if client.supports_method("textDocument/rangeFormatting") then
+    require("lsp-format-modifications").attach(client, bufnr,
+      {
+        format_on_save = true,
+        experimental_empty_line_handling = true,
+        format_callback = function(diff)
+          vim.lsp.buf.format(vim.tbl_extend("keep", opts, diff))
+        end,
+      })
+  elseif client.supports_method("textDocument/formatting") then
+    local augroup = vim.api.nvim_create_augroup("LspFileFormatting", {})
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre",
+      {
+        group = augroup,
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format(opts)
+        end,
+      })
+  end
+end
+
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
@@ -42,19 +67,22 @@ return {
 						capabilities = capabilities,
 					})
 				end,
-				["lua_ls"] = function()
-					lspconfig.lua_ls.setup({
-						capabilities = capabilities,
-						settings = {
-							Lua = {
-								runtime = { version = "Lua 5.1" },
-								diagnostics = {
-									globals = { "vim", "it", "describe", "before_each", "after_each" },
-								},
-							},
-						},
-					})
-				end,
+        ["lua_ls"] = function()
+          lspconfig.lua_ls.setup({
+            capabilities = capabilities,
+            settings = {
+              Lua = {
+                runtime = { version = "Lua 5.1" },
+                diagnostics = {
+                  globals = { "vim", "it", "describe", "before_each", "after_each" },
+                },
+              },
+            },
+            on_attach = function(client, bufnr)
+              attach_auto_formatter(client, bufnr, { name = "lua_ls" })
+            end
+          })
+        end,
 				["tsserver"] = function()
 					lspconfig.tsserver.setup({
 						on_attach = function(client)
@@ -79,6 +107,8 @@ return {
 						},
 					})
 				end,
+        -- TODO: add custom config if pyright conflicts with linter or formatter
+        -- ["pyright"] = function() end,
 			},
 		})
 
