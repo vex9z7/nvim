@@ -54,6 +54,16 @@ local function setup()
 			require("none-ls.diagnostics.eslint_d"),
 			require("none-ls.formatting.eslint_d"),
 
+      -- python
+      formatting.black,
+      -- see https://github.com/nvimtools/none-ls-extras.nvim/tree/main
+      require("none-ls.diagnostics.flake8").with({
+        extra_args = {
+          "--ignore",
+          "E121,E123,E126,E133,E2,E3,E501,E704,W2,W503,C901,E4,F841,W3,E115,E116,E722,F401,E12,E7,F405,X030,X031,X032,W605,E101,E111,E114,E117,E502,F402,F632,F811,F812,W191,W504,W601,H1,H3,H4,H5,H20,A003",
+        },
+      }),
+
 			-- shell
 			formatting.shfmt,
 			-- qml
@@ -89,6 +99,7 @@ local function setup()
 				end,
 			}),
 		},
+
 		on_attach = function(client, bufnr)
       attach_auto_formatter(client, bufnr, { name = "null-ls" });
 		end,
