@@ -1,7 +1,7 @@
 function attach_auto_formatter(client, bufnr, opts)
   opts = vim.F.if_nil(opts, {})
   if client.supports_method("textDocument/rangeFormatting") then
-    require("lsp-format-modifications").attach(client, bufnr,
+    local result = require("lsp-format-modifications").attach(client, bufnr,
       {
         format_on_save = true,
         experimental_empty_line_handling = true,
@@ -9,6 +9,11 @@ function attach_auto_formatter(client, bufnr, opts)
           vim.lsp.buf.format(vim.tbl_extend("keep", opts, diff))
         end,
       })
+    if result.success then
+      vim.notify("Ranger formatter " .. client.name .. " is attached to the buffer")
+    else
+      vim.notify("Ranger formatter " .. client.name .. " cannot be attached to the buffer")
+    end
   elseif client.supports_method("textDocument/formatting") then
     local augroup = vim.api.nvim_create_augroup("LspFileFormatting", {})
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
@@ -20,6 +25,7 @@ function attach_auto_formatter(client, bufnr, opts)
           vim.lsp.buf.format(opts)
         end,
       })
+    vim.notify("Formatter " .. client.name .. " is attached to the buffer")
   end
 end
 
