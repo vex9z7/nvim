@@ -16,6 +16,7 @@
   "cyberdream.nvim": { "branch": "main", "commit": "1801de891253b80e2e5b8fdc7c3faf54f49b93ae" },
   "dressing.nvim": { "branch": "master", "commit": "e3714c8049b2243e792492c4149e4cc395c68eb9" },
   "eva01.vim": { "branch": "main", "commit": "54412cbd92e74f43f4fc4479d12726f09723ce55" },
+  "fcitx.nvim": { "branch": "master", "commit": "dcb6b70888aa893d3d223bb777d4117bbdac06a7" },
   "fidget.nvim": { "branch": "main", "commit": "ef99df04a1c53a453602421bc0f756997edc8289" },
   "friendly-snippets": { "branch": "main", "commit": "700c4a25caacbb4648c9a27972c2fe203948e0c2" },
   "gitsigns.nvim": { "branch": "main", "commit": "4a143f13e122ab91abdc88f89eefbe70a4858a56" },
