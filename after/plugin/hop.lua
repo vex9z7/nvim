@@ -40,4 +40,4 @@ local function setup()
 	end, { desc = "hop down" })
 end
 
-try(setup, print)
+try(setup, vim.notify)

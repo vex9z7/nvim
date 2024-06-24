@@ -106,4 +106,4 @@ local function setup()
 	})
 end
 
-try(setup, print)
+try(setup, vim.notify)

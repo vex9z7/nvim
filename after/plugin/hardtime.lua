@@ -3,4 +3,4 @@ local function setup()
 	vim.opt.showmode = false
 end
 
-try(setup, print)
+try(setup, vim.notify)
