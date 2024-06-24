@@ -46,4 +46,7 @@ local function setup()
   end, { noremap = true, desc = "hop down" })
 end
 
+-- TODO: fix the issue that the direction does not work with multi_windows
+-- TODO: allow the tags to use capital letters to reduce the visual noise when
+-- the tags are too dense
 try(setup, vim.notify)
