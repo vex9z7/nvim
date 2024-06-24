@@ -8,7 +8,7 @@ local function setup()
 			direction = directions.AFTER_CURSOR,
 			hint_position = hint_positions.END,
 		})
-	end, { desc = "hop forawrd to end of word" })
+  end, { desc = "hop forward to end of word" })
 
 	vim.keymap.set("n", "<leader>ge", function()
 		hop.hint_camel_case({
@@ -22,7 +22,7 @@ local function setup()
 			direction = directions.AFTER_CURSOR,
 			hint_position = hint_positions.BEGIN,
 		})
-	end, { desc = "hop forawrd to word" })
+  end, { desc = "hop forward to word" })
 
 	vim.keymap.set("n", "<leader>b", function()
 		hop.hint_camel_case({
