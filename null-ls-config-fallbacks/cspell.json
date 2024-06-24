@@ -1,7 +1,20 @@
 {
-  "version": "0.2",
-  "language": "en",
-  "words": ["nvim", "vim", "itl", "mujin"],
   "flagWords": ["hte"],
-  "allowCompoundWords": true
+  "words": [
+    "nvim",
+    "vim",
+    "itl",
+    "mujin",
+    "dev",
+    "cli",
+    "lsp",
+    "cmd",
+    "webui",
+    "itlhub",
+    "typia",
+    "unflatten"
+  ],
+  "language": "en",
+  "allowCompoundWords": true,
+  "version": "0.2"
 }
