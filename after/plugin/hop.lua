@@ -39,6 +39,11 @@ local function setup()
     hop.hint_vertical({ direction = directions.AFTER_CURSOR, })
   end, { noremap = true, desc = "hop down" })
 
+  vim.keymap.set({ "n", "o", "x" }, "<leader>s", function()
+    hop.hint_patterns({
+      multi_windows = true,
+    }, "[][({},.]")
+  end, { noremap = true, desc = "hop down" })
 end
 
 try(setup, vim.notify)
