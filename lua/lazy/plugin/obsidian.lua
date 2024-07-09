@@ -1,3 +1,6 @@
+-- TODO: walkthough the config documents
+-- see https://github.com/epwalsh/obsidian.nvim?tab=readme-ov-file#configuration-options
+
 local vaultRoot = "~/Documents/the-vault/"
 return {
 	"epwalsh/obsidian.nvim",
@@ -22,7 +25,16 @@ return {
 		"nvim-telescope/telescope.nvim",
 		"nvim-treesitter",
 	},
-	opts = {
+  keys = {
+    { "<leader>oo", "<cmd>ObsidianOpen<cr>",        desc = "Open Obsidian" },
+    { "<leader>on", "<cmd>ObsidianNew<cr>",         desc = "Create a new Obsidian Document" },
+    { "<leader>os", "<cmd>ObsidianSearch<cr>",      desc = "Search Obsidian" },
+    { "<leader>of", "<cmd>ObsidianQuickSwitch<cr>", desc = "Obsidian Find Files" },
+    { "<leader>op", "<cmd>ObsidianPasteImg<cr>",    desc = "Obsidian Paste Image" },
+    { "<leader>or", "<cmd>ObsidianRename<cr>",      desc = "Obsidian Rename current note" },
+    { "<leader>ot", "<cmd>ObsidianTemplate<cr>",    desc = "Insert Obsidian Template into file" },
+  },
+  opts = {
 		workspaces = {
 			{
 				name = "hugo",
