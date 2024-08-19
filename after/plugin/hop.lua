@@ -42,7 +42,7 @@ local function setup()
   vim.keymap.set({ "n", "o", "x" }, "<leader>s", function()
     hop.hint_patterns({
       multi_windows = true,
-    }, "[][({},.]")
+    }, "[^0-9A-Za-z \t]")
   end, { noremap = true, desc = "hop down" })
 end
 
