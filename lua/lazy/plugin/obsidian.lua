@@ -3,28 +3,28 @@
 
 local vaultRoot = "~/Documents/the-vault/"
 return {
-	"epwalsh/obsidian.nvim",
-	version = "*", -- recommended, use latest release instead of latest commit
-	lazy = true,
-	-- only load obsidian.nvim for markdown files in your vault:
-	event = {
-		-- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-		-- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
+  "epwalsh/obsidian.nvim",
+  version = "*", -- recommended, use latest release instead of latest commit
+  lazy = true,
+  -- only load obsidian.nvim for markdown files in your vault:
+  event = {
+    -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+    -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
 
-		"BufReadPre "
-			.. vaultRoot
-			.. "**.md",
-		"BufNewFile " .. vaultRoot .. "**.md",
-	},
-	dependencies = {
-		-- Required.
-		"nvim-lua/plenary.nvim",
+    "BufReadPre "
+    .. vaultRoot
+    .. "**.md",
+    "BufNewFile " .. vaultRoot .. "**.md",
+  },
+  dependencies = {
+    -- Required.
+    "nvim-lua/plenary.nvim",
 
-		-- see below for full list of optional dependencies 👇
-		"hrsh7th/nvim-cmp",
-		"nvim-telescope/telescope.nvim",
-		"nvim-treesitter",
-	},
+    -- see below for full list of optional dependencies 👇
+    "hrsh7th/nvim-cmp",
+    "nvim-telescope/telescope.nvim",
+    "nvim-treesitter",
+  },
   keys = {
     -- :ObsidianOpen [QUERY] to open a note in the Obsidian app. This command has one optional argument: a query used to resolve the note to open by ID, path, or alias. If not given, the note corresponding to the current buffer is opened.
     { "<leader><leader>oo", "<cmd>ObsidianOpen<cr>",            desc = "Open Obsidian" },
