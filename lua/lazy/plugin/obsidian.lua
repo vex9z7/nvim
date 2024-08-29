@@ -148,10 +148,11 @@ return {
     ---@param url string
     follow_url_func = function(url)
       -- Open the URL in the default web browser.
-      vim.fn.jobstart({ "open", url }) -- Mac OS
-      -- vim.fn.jobstart({"xdg-open", url})  -- linux
+      -- vim.fn.jobstart({ "open", url }) -- Mac OS
+      -- vim.fn.jobstart({ "xdg-open", url }) -- linux
       -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
-      -- vim.ui.open(url) -- need Neovim 0.10.0+
+      vim.ui.open(url) -- need Neovim 0.10.0+
+      -- TODO: generalized it to all file type with other plugins
     end,
     -- Optional, configure additional syntax highlighting / extmarks.
     -- This requires you have `conceallevel` set to 1 or 2. See `:help conceallevel` for more details.
