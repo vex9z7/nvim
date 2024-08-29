@@ -30,8 +30,8 @@ vim.opt.undodir = vim.env.HOME .. "/.config/nvim/undo"
 vim.opt.undofile = true
 
 -- number of undo saved
-vim.opt.undolevels=10000
-vim.opt.undoreload=10000
+vim.opt.undolevels = 10000
+vim.opt.undoreload = 10000
 
 -- vim.opt.hlsearch = false
 vim.opt.incsearch = true
