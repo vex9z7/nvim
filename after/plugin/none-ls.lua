@@ -53,6 +53,7 @@ local function setup()
 			-- see https://github.com/nvimtools/none-ls-extras.nvim/tree/main
 			require("none-ls.diagnostics.eslint_d"),
 			require("none-ls.formatting.eslint_d"),
+			require("none-ls.code_actions.eslint_d"),
 
       -- python
       formatting.black,
