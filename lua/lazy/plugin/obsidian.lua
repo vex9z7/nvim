@@ -1,6 +1,9 @@
 -- TODO: walkthough the config documents
 -- see https://github.com/epwalsh/obsidian.nvim?tab=readme-ov-file#configuration-options
 
+
+local DAILY_NOTES_TAG = "daily-notes"
+
 local vaultRoot = "~/Documents/the-vault/"
 return {
   "epwalsh/obsidian.nvim",
@@ -62,7 +65,7 @@ return {
       -- Optional, if you want to change the date format of the default alias of daily notes.
       -- alias_format = "%B %-d, %Y",
       -- Optional, default tags to add to each new daily note created.
-      default_tags = { "daily-notes" },
+      default_tags = { DAILY_NOTES_TAG },
       -- Optional, if you want to automatically insert a template from your template directory like 'daily.md'
       template = "daily.template"
     },
@@ -85,12 +88,6 @@ return {
       },
       -- TODO:
       -- -- Toggle check-boxes.
-      -- ["<leader>ch"] = {
-      --   action = function()
-      --     return require("obsidian").util.toggle_checkbox()
-      --   end,
-      --   opts = { buffer = true },
-      -- },
       -- -- Smart action depending on context, either follow link or toggle checkbox.
       -- ["<cr>"] = {
       --   action = function()
@@ -117,9 +114,13 @@ return {
     -- Optional, alternatively you can customize the frontmatter data.
     ---@return table
     note_frontmatter_func = function(note)
-      -- Add the title of the note as an alias.
-      if note.title then
-        note:add_alias(note.title)
+      local is_daily = note.tags == DAILY_NOTES_TAG
+
+      if not is_daily then
+        -- Add the title of the note as an alias.
+        if note.title then
+          note:add_alias(note.title)
+        end
       end
 
       local out = { id = note.id, aliases = note.aliases, tags = note.tags }
