@@ -68,7 +68,6 @@ local function setup()
 			-- shell
 			formatting.shfmt,
 			-- qml
-			formatting.qmlformat,
 			qmllintSourceFactory().with({
 				extra_args = { "-U" },
 				diagnostic_config = {
