@@ -4,6 +4,13 @@ vim.opt.termguicolors = true
 
 local virtual_symbols = { '', '', '󱠦', '', }
 
+local palette = {
+  ['@baby-blue'] = '#90ace3',
+  ['@blue'] = '#1673ff',
+  ['@blue-jeans'] = '#61afef',
+}
+
+
 return {
   'brenoprata10/nvim-highlight-colors',
   config = function()
@@ -53,7 +60,18 @@ return {
       ---Set custom colors
       ---Label must be properly escaped with '%' to adhere to `string.gmatch`
       --- :help string.gmatch
-      custom_colors = {},
+      --- e.g. @blue; @blue-jeans; @baby-blue;
+      custom_colors = (function()
+        local formatted_colors = {}
+        for name, data in pairs(palette) do
+          local formatted_color = {
+            label = name:gsub('%-', '%%-'),
+            color = data,
+          }
+          table.insert(formatted_colors, formatted_color)
+        end
+        return formatted_colors
+      end)(),
 
       -- Exclude filetypes or buftypes from highlighting e.g. 'exclude_buftypes = {'text'}'
       exclude_filetypes = {},
