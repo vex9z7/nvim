@@ -1,45 +1,90 @@
+function setup_symbols_colors()
+  local autocmd = vim.api.nvim_create_autocmd
+
+  -- TODO: align the color with status bar
+  autocmd({ 'ModeChanged' }, {
+    callback = function()
+      local current_mode = vim.fn.mode()
+      if current_mode == 'n' then
+        vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#8aa872' })
+        vim.fn.sign_define('smoothcursor', { text = '' })
+      elseif current_mode == 'v' then
+        vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#bf616a' })
+        vim.fn.sign_define('smoothcursor', { text = '' })
+      elseif current_mode == 'V' then
+        vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#bf616a' })
+        vim.fn.sign_define('smoothcursor', { text = '' })
+      elseif current_mode == '�' then
+        vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#bf616a' })
+        vim.fn.sign_define('smoothcursor', { text = '' })
+      elseif current_mode == 'i' then
+        vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#668aab' })
+        vim.fn.sign_define('smoothcursor', { text = '' })
+      end
+    end,
+  })
+end
+
+local matrix_chars = {
+  'ｱ', 'ｲ', 'ｳ', 'ｴ', 'ｵ',
+  'ｶ', 'ｷ', 'ｸ', 'ｹ', 'ｺ',
+  'ｻ', 'ｼ', 'ｽ', 'ｾ', 'ｿ',
+  'ﾀ', 'ﾁ', 'ﾂ', 'ﾃ', 'ﾄ',
+  'ﾅ', 'ﾆ', 'ﾇ', 'ﾈ', 'ﾉ',
+  'ﾊ', 'ﾋ', 'ﾌ', 'ﾍ', 'ﾎ',
+  'ﾏ', 'ﾐ', 'ﾑ', 'ﾒ', 'ﾓ',
+  'ﾔ', 'ﾕ', 'ﾖ',
+  'ﾗ', 'ﾘ', 'ﾙ', 'ﾚ', 'ﾛ',
+  'ﾜ', 'ｦ', 'ﾝ',
+  '○', 'x', '△', '□', '▽',
+}
+
+
 return {
   'gen740/SmoothCursor.nvim',
   config = function()
     require('smoothcursor').setup({
-      type = "default", -- Cursor movement calculation method, choose "default", "exp" (exponential) or "matrix".
+      type = "exp", -- Cursor movement calculation method, choose "default", "exp" (exponential) or "matrix".
 
       cursor = "", -- Cursor shape (requires Nerd Font). Disabled in fancy mode.
-      texthl = "SmoothCursor", -- Highlight group. Default is { bg = nil, fg = "#FFD400" }. Disabled in fancy mode.
+      texthl = "nil", -- Highlight group. Default is { bg = nil, fg = "#FFD400" }. Disabled in fancy mode.
       linehl = nil, -- Highlights the line under the cursor, similar to 'cursorline'. "CursorLine" is recommended. Disabled in fancy mode.
 
       fancy = {
-        enable = false, -- enable fancy mode
-        head = { cursor = "▷", texthl = "SmoothCursor", linehl = nil }, -- false to disable fancy head
+        enable = true, -- enable fancy mode
+        head = false,  -- false to disable fancy head
         body = {
           { cursor = "󰝥", texthl = "SmoothCursorRed" },
           { cursor = "󰝥", texthl = "SmoothCursorOrange" },
-          { cursor = "●", texthl = "SmoothCursorYellow" },
-          { cursor = "●", texthl = "SmoothCursorGreen" },
+          { cursor = "•", texthl = "SmoothCursorYellow" },
+          { cursor = "•", texthl = "SmoothCursorGreen" },
           { cursor = "•", texthl = "SmoothCursorAqua" },
           { cursor = ".", texthl = "SmoothCursorBlue" },
           { cursor = ".", texthl = "SmoothCursorPurple" },
-        },
-        tail = { cursor = nil, texthl = "SmoothCursor" } -- false to disable fancy tail
+        }
+        ,
+        tail = false, -- false to disable fancy tail
       },
 
       matrix = { -- Loaded when 'type' is set to "matrix"
         head = {
-          -- Picks a random character from this list for the cursor text
-          cursor = require('smoothcursor.matrix_chars'),
-          -- Picks a random highlight from this list for the cursor text
-          texthl = {
-            'SmoothCursor',
-          },
-          linehl = nil, -- No line highlight for the head
+          cursor = nil,
+          linehl = nil,
+          texthl = nil,
         },
         body = {
-          length = 6, -- Specifies the length of the cursor body
+          length = 4,            -- Specifies the length of the cursor body
           -- Picks a random character from this list for the cursor body text
-          cursor = require('smoothcursor.matrix_chars'),
+          cursor = matrix_chars, -- require('smoothcursor.matrix_chars'),
           -- Picks a random highlight from this list for each segment of the cursor body
           texthl = {
+            'SmoothCursorRed',
+            'SmoothCursorOrange',
+            'SmoothCursorYellow',
             'SmoothCursorGreen',
+            'SmoothCursorAqua',
+            'SmoothCursorBlue',
+            'SmoothCursorPurple',
           },
         },
         tail = {
@@ -55,12 +100,12 @@ return {
 
       autostart = true,          -- Automatically start SmoothCursor
       always_redraw = true,      -- Redraw the screen on each update
-      flyin_effect = nil,        -- Choose "bottom" or "top" for flying effect
-      speed = 25,                -- Max speed is 100 to stick with your current position
-      intervals = 35,            -- Update intervals in milliseconds
+      flyin_effect = 'bottom',   -- Choose "bottom" or "top" for flying effect
+      speed = 50,                -- Max speed is 100 to stick with your current position
+      intervals = 100,           -- Update intervals in milliseconds
       priority = 10,             -- Set marker priority
-      timeout = 3000,            -- Timeout for animations in milliseconds
-      threshold = 3,             -- Animate only if cursor moves more than this many lines
+      timeout = 99999,           -- Timeout for animations in milliseconds
+      threshold = 0,             -- Animate only if cursor moves more than this many lines
       max_threshold = nil,       -- If you move more than this many lines, don't animate (if `nil`, deactivate check)
       disable_float_win = false, -- Disable in floating windows
       enabled_filetypes = nil,   -- Enable only for specific file types, e.g., { "lua", "vim" }
