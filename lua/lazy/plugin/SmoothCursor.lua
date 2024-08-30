@@ -102,7 +102,7 @@ return {
       always_redraw = true,      -- Redraw the screen on each update
       flyin_effect = 'bottom',   -- Choose "bottom" or "top" for flying effect
       speed = 50,                -- Max speed is 100 to stick with your current position
-      intervals = 100,           -- Update intervals in milliseconds
+      intervals = 50,            -- Update intervals in milliseconds
       priority = 10,             -- Set marker priority
       timeout = 99999,           -- Timeout for animations in milliseconds
       threshold = 0,             -- Animate only if cursor moves more than this many lines
