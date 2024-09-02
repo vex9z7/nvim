@@ -3,11 +3,31 @@ vim.opt.guicursor = ""
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+
+-- Config line break and wrap
+
+-- hard wrap
+vim.opt.textwidth = 0
+
+-- soft wrap
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.showbreak = ' 󱞩 '
+
+-- FIXME: setting columns doesn't fit to the theme color
+-- vertical line, only serves as a visual aid
+local buffer_columns = 80;
+vim.opt.colorcolumn = tostring(buffer_columns)
+-- actually width including numberwidth
+vim.opt.columns = buffer_columns + 4 + 1 + 2 -- TODO: figure out why need 2 extra columns
+
+-- e.g. Auctor erat et ut, id ut faucibus in, consequat pretium pellentesque tempor. Nunc natoque dignissim pellentesque, ultrices rutrum convallis nunc, magna purus dapibus erat. Rhoncus ante diam est, leo suspendisse est nullam, lorem maecenas vulputate porttitor. Nulla vestibulum maecenas etiam, rhoncus semper tortor metus, elit odio nulla dictum. Est parturient dapibus nunc, vitae vitae lobortis dui, tristique tempor sapien nulla. Nullam arcu dis malesuada, diam nullam cursus gravida, risus consequat eu sed. In ac posuere mus, feugiat vulputate id magna, vitae molestie eget et. Eu laoreet sed ornare, eros viverra quisque et, dui ac sem nec. Dui, ac, nibh efficitur.
+
+
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
-vim.opt.textwidth = 120
 
 -- search will be case sensitive if it contains an uppercase letter
 vim.opt.ignorecase = true
@@ -19,8 +39,7 @@ vim.opt.smartindent = true
 -- always use the clipboard
 vim.opt.clipboard:append("unnamedplus")
 
-vim.opt.wrap = true
-vim.opt.linebreak = true
+
 
 vim.opt.swapfile = false
 vim.opt.backup = false
@@ -44,8 +63,6 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
-
-vim.opt.colorcolumn = "120"
 
 -- see at https://github.com/epwalsh/obsidian.nvim/issues/286#issuecomment-1877258732
 vim.opt.conceallevel = 1
