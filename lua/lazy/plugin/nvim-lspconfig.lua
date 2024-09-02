@@ -29,6 +29,44 @@ function attach_auto_formatter(client, bufnr, opts)
   end
 end
 
+-- A workaround to fix the exception that occurs on jumping to a css style.
+-- 2 Steps solution:
+--    1. disable tsserver go to definition for it. See more details at https://github.com/neovim/neovim/issues/19237#issuecomment-2259638650
+--    2. install and config cssmodules-language-server from Mason. A nice catch from https://github.com/neovim/neovim/issues/19237#issuecomment-1509945822
+local tsHandlers = {
+  ["textDocument/definition"] = function(err, result, params, ...)
+    if result == nil or vim.tbl_isempty(result) then
+      return nil
+    end
+
+    if vim.islist(result) then
+      for _, value in pairs(result) do
+        if value.uri == nil then
+          return nil
+        else
+          -- definition of disbaled file extensions
+          local extensions_to_check = { ".less", ".scss", ".css" } -- INFO: not sure if we should disable css as well
+
+          local function if_ends_with(str, suffix)
+            local str_len = string.len(str)
+            local suffix_len = string.len(suffix)
+
+            return str_len >= suffix_len and string.sub(str, -suffix_len) == suffix
+          end
+
+          for _, extension in ipairs(extensions_to_check) do
+            if if_ends_with(value.uri, extension) then
+              return false
+            end
+          end
+        end
+      end
+    end
+    return vim.lsp.handlers['textDocument/definition'](err, result, params, ...)
+  end,
+}
+
+
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
@@ -53,8 +91,9 @@ return {
 
     require("mason-lspconfig").setup({
       ensure_installed = {
-        "tsserver", -- lsp sever
+        "tsserver",
         "stylelint_lsp",
+        "cssmodules_ls",
         -- "pyright",
         "lua_ls",
         "rust_analyzer",
@@ -86,6 +125,7 @@ return {
         end,
         ["tsserver"] = function()
           lspconfig.tsserver.setup({
+            handlers = tsHandlers,
             on_attach = function(client)
               -- disable the formatting from tsserver
               client.server_capabilities.documentFormattingProvider = false
