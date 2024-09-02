@@ -41,13 +41,14 @@ local tsHandlers = {
 
     if vim.islist(result) then
       for _, value in pairs(result) do
-        if value.uri == nil then
+        local uri = value.targetUri
+        if uri == nil then
           return nil
         else
           -- definition of disbaled file extensions
           local extensions_to_check = { ".less", ".scss", ".css" } -- INFO: not sure if we should disable css as well
 
-          local function if_ends_with(str, suffix)
+          local function ends_with(str, suffix)
             local str_len = string.len(str)
             local suffix_len = string.len(suffix)
 
@@ -55,8 +56,8 @@ local tsHandlers = {
           end
 
           for _, extension in ipairs(extensions_to_check) do
-            if if_ends_with(value.uri, extension) then
-              return false
+            if ends_with(uri, extension) then
+              return nil
             end
           end
         end
