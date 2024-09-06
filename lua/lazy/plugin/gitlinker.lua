@@ -25,7 +25,10 @@ return {
         ["git.launchpad.net"] = require "gitlinker.hosts".get_launchpad_type_url,
         ["repo.or.cz"] = require "gitlinker.hosts".get_repoorcz_type_url,
         ["git.kernel.org"] = require "gitlinker.hosts".get_cgit_type_url,
-        ["git.savannah.gnu.org"] = require "gitlinker.hosts".get_cgit_type_url
+        ["git.savannah.gnu.org"] = require "gitlinker.hosts".get_cgit_type_url,
+
+        -- INFO: confidential
+        ["git.mujin.co.jp"] = gitlinker.hosts.get_gitlab_type_url,
       },
       -- default mapping to call url generation with action_callback
       mappings = nil
