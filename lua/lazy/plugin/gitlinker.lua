@@ -28,7 +28,15 @@ return {
         ["git.savannah.gnu.org"] = require "gitlinker.hosts".get_cgit_type_url
       },
       -- default mapping to call url generation with action_callback
-      mappings = "<leader>gy"
+      mappings = nil
+      -- FIXME: cannot disable the default mapping, the causing line
+      -- https://github.com/ruifm/gitlinker.nvim/blob/cc59f732f3d043b626c8702cb725c82e54d35c25/lua/gitlinker/mappings.lua#L20
     })
+
+    for mode, description in pairs({ n = 'Copy the permanent link to current line', v = 'Copy the permanent link to selected lines' }) do
+      vim.keymap.set(mode, "<leader><leader>gy", function()
+        gitlinker.get_buf_range_url(mode)
+      end, { silent = false, noremap = true, desc = description })
+    end
   end
 }
