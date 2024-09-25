@@ -1,1 +1,28 @@
-{"language":"en","version":"0.2","flagWords":["hte"],"allowCompoundWords":true,"words":["nvim","vim","itl","mujin","dev","cli","lsp","cmd","webui","itlhub","typia","unflatten","keyof"]}
+{
+  "words": [
+    "nvim",
+    "vim",
+    "itl",
+    "mujin",
+    "dev",
+    "cli",
+    "lsp",
+    "cmd",
+    "webui",
+    "itlhub",
+    "typia",
+    "unflatten",
+    "keyof",
+    "netrw",
+    "tyipa",
+    "Pyright",
+    "supervisord",
+    "Rspack",
+    "Flatpak",
+    "indexedDB"
+  ],
+  "allowCompoundWords": true,
+  "language": "en",
+  "version": "0.2",
+  "flagWords": ["hte"]
+}
