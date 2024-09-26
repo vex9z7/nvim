@@ -58,7 +58,8 @@ vim.opt.inccommand = "nosplit"
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 8
+-- FIXME: enter everything in insert mode or paste in normal mode, will scroll up automatically
+-- vim.opt.scrolloff = 999
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
