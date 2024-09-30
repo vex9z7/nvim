@@ -148,6 +148,25 @@ return {
               },
             },
           })
+
+
+          local augroup = vim.api.nvim_create_augroup("TsserverCleanImports", {})
+          vim.api.nvim_clear_autocmds({ group = augroup })
+
+          vim.api.nvim_create_autocmd("BufWritePre",
+            {
+              -- FIXME:  resolve dependency on null-ls formatter finish
+              group = augroup,
+              pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
+              callback = function()
+                local params = {
+                  command = "_typescript.organizeImports",
+                  arguments = { vim.api.nvim_buf_get_name(0) },
+                  title = "CleanImports"
+                }
+                vim.lsp.buf.execute_command(params)
+              end,
+            })
         end,
         -- TODO: add custom config if pyright conflicts with linter or formatter
         -- ["pyright"] = function() end,
