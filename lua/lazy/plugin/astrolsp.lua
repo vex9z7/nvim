@@ -112,8 +112,6 @@ return {
         cond = "textDocument/references",
       }
     end
-    maps.n["<Leader>lR"] =
-    { function() vim.lsp.buf.references() end, desc = "Search references", cond = "textDocument/references" }
 
     maps.n["<Leader>lr"] =
     { function() vim.lsp.buf.rename() end, desc = "Rename current symbol", cond = "textDocument/rename" }
