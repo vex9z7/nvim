@@ -20,15 +20,6 @@ return {
     local maps = empty_map_table()
 
     -- TODO: Remove mapping after dropping support for Neovim v0.9, it's automatic
-    if vim.fn.has "nvim-0.10" == 0 then
-      maps.n["crr"] = {
-        function() vim.lsp.buf.code_action() end,
-        desc = "LSP code action",
-        cond = "testDocument/codeAction", -- LSP client capability string
-      }
-      maps.v["<C-R>r"] = maps.n["crr"]
-      maps.v["<C-R><C-R>"] = maps.n["<C-R>r"]
-    end
     maps.n["<Leader>la"] = {
       function() vim.lsp.buf.code_action() end,
       desc = "LSP code action",
@@ -115,11 +106,7 @@ return {
 
     maps.n["<Leader>lr"] =
     { function() vim.lsp.buf.rename() end, desc = "Rename current symbol", cond = "textDocument/rename" }
-    -- TODO: Remove mapping after dropping support for Neovim v0.9, it's automatic
-    if vim.fn.has "nvim-0.10" == 0 then
-      maps.n["crn"] =
-      { function() vim.lsp.buf.rename() end, desc = "Rename current symbol", cond = "textDocument/rename" }
-    end
+
 
     maps.n["<Leader>lh"] =
     { function() vim.lsp.buf.signature_help() end, desc = "Signature help", cond = "textDocument/signatureHelp" }
