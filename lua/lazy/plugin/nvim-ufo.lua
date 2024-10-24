@@ -28,7 +28,7 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
     end
     curWidth = curWidth + chunkWidth
   end
-  table.insert(newVirtText, { suffix, 'MoreMsg' })
+  table.insert(newVirtText, { suffix, })
   return newVirtText
 end
 
