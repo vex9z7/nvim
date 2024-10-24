@@ -63,7 +63,6 @@ local function setup()
             return vim_item
           end
 
-
           vim_item.menu = string.format("[%s/%s]", string.sub(vim_item.kind, 0, 4), source_name)
           return vim_item
         end
@@ -130,9 +129,6 @@ local function setup()
       { name = "luasnip" }, -- For luasnip users.
       { name = "nvim-cmp-ts-tag-close" },
     }, {
-      {
-        name = 'calc',
-      },
       {
         name = 'color_names',
       },
