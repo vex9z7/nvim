@@ -1,6 +1,6 @@
 vim.opt.foldcolumn = '1' -- '0' is not bad
-vim.opt.foldlevel = 4    -- Using ufo provider need a large value, feel free to decrease the value
-vim.opt.foldlevelstart = 4
+-- TODO: fold deep nested code when open a new buffer
+vim.opt.foldlevel = 999  -- Using ufo provider need a large value, feel free to decrease the value
 vim.opt.fml = 2
 
 -- see at https://github.com/kevinhwang91/nvim-ufo?tab=readme-ov-file
