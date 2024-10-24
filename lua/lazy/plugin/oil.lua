@@ -1,5 +1,5 @@
 return {
-  'stevearc/oil.nvim',
+  'vex9z7/oil.nvim',
   ---@module 'oil'
   ---@type oil.SetupOpts
   opts = {},
@@ -71,7 +71,7 @@ return {
         ["<C-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
         ["<C-h>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
         ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
-        ["<C-p>"] = "actions.preview",
+        ["<C-p>"] = { "actions.preview", opts = { horizontal = true, split = 'botright' } },
         ["<C-c>"] = "actions.close",
         ["<C-l>"] = "actions.refresh",
         ["-"] = "actions.parent",
@@ -134,7 +134,7 @@ return {
           winblend = 0,
         },
         -- preview_split: Split direction: "auto", "left", "right", "above", "below".
-        preview_split = "auto",
+        preview_split = "above",
         -- This is the config that will be passed to nvim_open_win.
         -- Change values here to customize the layout
         override = function(conf)
