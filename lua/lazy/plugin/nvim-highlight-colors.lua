@@ -4,12 +4,15 @@ vim.opt.termguicolors = true
 
 local virtual_symbols = { '', '', '󱠦', '', }
 
-local palette = {
+local palette = try(function() return require('../../private/palette') end, nil, {});
+
+local example_palette = {
   ['@baby-blue'] = '#90ace3',
   ['@blue'] = '#1673ff',
   ['@blue-jeans'] = '#61afef',
 }
 
+palette = vim.tbl_extend('force', palette, example_palette);
 
 return {
   'brenoprata10/nvim-highlight-colors',
