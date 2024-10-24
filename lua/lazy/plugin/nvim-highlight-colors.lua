@@ -2,8 +2,6 @@
 
 vim.opt.termguicolors = true
 
-local virtual_symbols = { '', '', '󱠦', '', }
-
 local palette = try(function() return require('../../private/palette') end, nil, {});
 
 local example_palette = {
@@ -24,7 +22,7 @@ return {
 
       ---Set virtual symbol (requires render to be set to 'virtual')
       ---alternatives
-      virtual_symbol = (virtual_symbols[3]),
+      virtual_symbol = ('󱠦'),
 
       ---Set virtual symbol suffix (defaults to '')
       virtual_symbol_prefix = '[',
