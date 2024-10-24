@@ -100,6 +100,8 @@ return {
         "rust_analyzer",
         "gopls",
         "cssls",
+        -- "markdown"
+        "marksman",
         -- "css_variables",
       },
       handlers = {
