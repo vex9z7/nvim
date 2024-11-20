@@ -5,9 +5,15 @@ return {
 			formatters_by_ft = {
 				-- Conform will run multiple formatters sequentially
 				lua = { "stylua" },
-				python = { "ruff" },
+				python = { "autoflake", "ruff" },
 				rust = { "rustfmt" },
-				-- javascript = { "prettierd", "prettier", stop_after_first = true },
+				javascript = { "eslint_d", "prettierd" },
+				javascriptreact = { "eslint_d", "prettierd" },
+				typescript = { "eslint_d", "prettierd" },
+				typescriptreact = { "eslint_d", "prettierd" },
+				json = { "prettierd" },
+				yaml = { "prettierd" },
+				markdown = { "prettierd" },
 			},
 			format_on_save = {
 				-- These options will be passed to conform.format()
