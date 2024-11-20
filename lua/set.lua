@@ -27,7 +27,7 @@ vim.opt.columns = buffer_columns + 4 + 1 + 2 -- TODO: figure out why need 2 extr
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
+-- vim.opt.expandtab = true
 
 -- search will be case sensitive if it contains an uppercase letter
 vim.opt.ignorecase = true
@@ -67,3 +67,11 @@ vim.opt.updatetime = 50
 
 -- see at https://github.com/epwalsh/obsidian.nvim/issues/286#issuecomment-1877258732
 vim.opt.conceallevel = 1
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.softtabstop = 2
+  end,
+})
