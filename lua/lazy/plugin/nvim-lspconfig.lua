@@ -29,45 +29,6 @@ function attach_auto_formatter(client, bufnr, opts)
   end
 end
 
--- A workaround to fix the exception that occurs on jumping to a css style.
--- 2 Steps solution:
---    1. disable tsserver go to definition for it. See more details at https://github.com/neovim/neovim/issues/19237#issuecomment-2259638650
---    2. install and config cssmodules-language-server from Mason. A nice catch from https://github.com/neovim/neovim/issues/19237#issuecomment-1509945822
-local tsHandlers = {
-  ["textDocument/definition"] = function(err, result, params, ...)
-    if result == nil or vim.tbl_isempty(result) then
-      return nil
-    end
-
-    if vim.islist(result) then
-      for _, value in pairs(result) do
-        local uri = value.targetUri
-        if uri == nil then
-          return nil
-        else
-          -- definition of disbaled file extensions
-          local extensions_to_check = { ".less", ".scss", ".css" } -- INFO: not sure if we should disable css as well
-
-          local function ends_with(str, suffix)
-            local str_len = string.len(str)
-            local suffix_len = string.len(suffix)
-
-            return str_len >= suffix_len and string.sub(str, -suffix_len) == suffix
-          end
-
-          for _, extension in ipairs(extensions_to_check) do
-            if ends_with(uri, extension) then
-              return nil
-            end
-          end
-        end
-      end
-    end
-    return vim.lsp.handlers['textDocument/definition'](err, result, params, ...)
-  end,
-}
-
-
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
@@ -92,16 +53,23 @@ return {
 
     require("mason-lspconfig").setup({
       ensure_installed = {
+        -- typescript/javascript
         "tsserver",
         "stylelint_lsp",
         "cssmodules_ls",
-        -- "pyright",
-        "lua_ls",
-        "rust_analyzer",
-        "gopls",
+        -- css related
         "cssls",
-        -- "markdown"
-        "marksman",
+        -- python
+        "pyright",
+        -- lua
+        "lua_ls",
+        -- rust
+        "rust_analyzer",
+        -- go
+        "gopls",
+        -- markdown
+        -- "zk",
+        -- others(not lsp):
         -- "css_variables",
       },
       handlers = {
@@ -188,25 +156,6 @@ return {
               },
             },
           })
-
-
-          local augroup = vim.api.nvim_create_augroup("TsserverCleanImports", {})
-          vim.api.nvim_clear_autocmds({ group = augroup })
-
-          vim.api.nvim_create_autocmd("BufWritePre",
-            {
-              -- FIXME:  resolve dependency on null-ls formatter finish
-              group = augroup,
-              pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
-              callback = function()
-                local params = {
-                  command = "_typescript.organizeImports",
-                  arguments = { vim.api.nvim_buf_get_name(0) },
-                  title = "CleanImports"
-                }
-                vim.lsp.buf.execute_command(params)
-              end,
-            })
         end,
         -- reference at https://github.com/elijah-potter/harper/blob/88f675af0e250871ac9ee9822f5090985b90d8b8/harper-ls/README.md
         ["harper_ls"] = function()
