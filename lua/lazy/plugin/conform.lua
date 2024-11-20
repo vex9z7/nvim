@@ -1,5 +1,9 @@
 return {
 	"stevearc/conform.nvim",
+	dependencies = {
+		"williamboman/mason.nvim",
+		"zapling/mason-conform.nvim",
+	},
 	config = function()
 		require("conform").setup({
 			formatters_by_ft = {
@@ -21,5 +25,7 @@ return {
 				lsp_format = "fallback",
 			},
 		})
+
+		require("mason-conform").setup()
 	end,
 }
