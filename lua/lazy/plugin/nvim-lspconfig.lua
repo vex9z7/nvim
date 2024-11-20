@@ -208,8 +208,20 @@ return {
               end,
             })
         end,
-        -- TODO: add custom config if pyright conflicts with linter or formatter
-        -- ["pyright"] = function() end,
+        -- reference at https://github.com/elijah-potter/harper/blob/88f675af0e250871ac9ee9822f5090985b90d8b8/harper-ls/README.md
+        ["harper_ls"] = function()
+          lspconfig.harper_ls.setup({
+            settings = {
+              ["harper-ls"] = {
+                diagnosticSeverity = "information",
+                linters = {
+                  spell_check = false,
+                  sentence_capitalization = false,
+                },
+              }
+            }
+          })
+        end,
       },
     })
 
