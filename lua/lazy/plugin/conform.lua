@@ -15,6 +15,8 @@ return {
 				javascriptreact = { "eslint_d", "prettierd" },
 				typescript = { "eslint_d", "prettierd" },
 				typescriptreact = { "eslint_d", "prettierd" },
+				css = { "stylelint", "prettierd" },
+				less = { "stylelint", "prettierd" },
 				json = { "prettierd" },
 				yaml = { "prettierd" },
 				markdown = { "prettierd" },
