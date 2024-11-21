@@ -82,20 +82,6 @@ return {
 			cond = formatting_enabled,
 		}
 		maps.v["<Leader>lf"] = maps.n["<Leader>lf"]
-		maps.n["<Leader>uf"] = {
-			function()
-				require("astrolsp.toggles").buffer_autoformat()
-			end,
-			desc = "Toggle autoformatting (buffer)",
-			cond = formatting_enabled,
-		}
-		maps.n["<Leader>uF"] = {
-			function()
-				require("astrolsp.toggles").autoformat()
-			end,
-			desc = "Toggle autoformatting (global)",
-			cond = formatting_enabled,
-		}
 
 		-- TODO: Remove mapping after dropping support for Neovim v0.9, it's automatic
 		if vim.fn.has("nvim-0.10") == 0 then
