@@ -4,6 +4,34 @@ return {
 		"williamboman/mason.nvim",
 		"zapling/mason-conform.nvim",
 	},
+	keys = {
+		{
+			"<leader><leader>uf",
+			function()
+				vim.b.disable_autoformat = not vim.b.disable_autoformat
+				if vim.b.disable_autoformat then
+					vim.print("auto formatter disabled (buffer)")
+				else
+					vim.print("auto formatter enabled (buffer)")
+				end
+			end,
+			mode = { "v", "n" },
+			desc = "Toggle autoformatting (buffer)",
+		},
+		{
+			"<leader><leader>uF",
+			function()
+				vim.g.disable_autoformat = not vim.g.disable_autoformat
+				if vim.g.disable_autoformat then
+					vim.print("auto formatter disabled (global)")
+				else
+					vim.print("auto formatter enabled (global)")
+				end
+			end,
+			mode = { "v", "n" },
+			desc = "Toggle autoformatting (global)",
+		},
+	},
 	config = function()
 		require("conform").setup({
 			formatters_by_ft = {
@@ -35,27 +63,6 @@ return {
 				}
 			end,
 		})
-
-		vim.keymap.set({ "v", "n" }, "<leader><leader>uf", function()
-			vim.b.disable_autoformat = not vim.b.disable_autoformat
-			if vim.b.disable_autoformat then
-				vim.print("auto formatter disabled (buffer)")
-			else
-				vim.print("auto formatter enabled (buffer)")
-			end
-		end, {
-			desc = "Toggle autoformatting (buffer)",
-		})
-
-		vim.keymap.set({ "v", "n" }, "<leader><leader>uF", function()
-			vim.g.disable_autoformat = not vim.g.disable_autoformat
-			if vim.g.disable_autoformat then
-				vim.print("auto formatter disabled (global)")
-			else
-				vim.print("auto formatter enabled (global)")
-			end
-		end, {
-			desc = "Toggle autoformatting (global)",
 		})
 
 		require("mason-conform").setup()
