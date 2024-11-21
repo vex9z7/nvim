@@ -9,7 +9,7 @@ return {
 			formatters_by_ft = {
 				-- Conform will run multiple formatters sequentially
 				lua = { "stylua" },
-				python = { "autoflake", "ruff" },
+				python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
 				rust = { "rustfmt" },
 				javascript = { "eslint_d", "prettierd" },
 				javascriptreact = { "eslint_d", "prettierd" },
