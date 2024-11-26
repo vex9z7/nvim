@@ -31,6 +31,18 @@ return {
 			mode = { "v", "n" },
 			desc = "Toggle autoformatting (global)",
 		},
+		{
+			"<leader><leader>lf",
+			function()
+				local bufnr = vim.api.nvim_get_current_buf()
+				if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+					return
+				end
+				require("conform").format()
+			end,
+			mode = { "v", "n" },
+			desc = "Format buffer",
+		},
 	},
 	-- This will provide type hinting with LuaLS
 	---@module "conform"
@@ -52,14 +64,16 @@ return {
 			yaml = { "prettierd" },
 			markdown = { "prettierd" },
 		},
-		default_format_opts = { lsp_format = "fallback" },
+		default_format_opts = { timeout_ms = 1500, lsp_format = "fallback" },
 		-- Set up format-on-save
 		format_on_save = function(bufnr)
 			-- Disable with a global or buffer-local variable
 			if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
 				return
 			end
-			return { timeout_ms = 500, lsp_format = "fallback" }
+			return {
+				undojoin = true,
+			}
 		end,
 	},
 }

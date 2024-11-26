@@ -66,23 +66,6 @@ return {
 			cond = "textDocument/definition",
 		}
 
-		local formatting_enabled = function(client)
-			local disabled = true
-			-- local disabled = opts.formatting.disabled
-			-- return false
-			return client.supports_method("textDocument/formatting")
-				and disabled ~= true
-				and not vim.tbl_contains(disabled, client.name)
-		end
-		maps.n["<Leader>lf"] = {
-			function()
-				vim.lsp.buf.format(require("astrolsp").format_opts)
-			end,
-			desc = "Format buffer",
-			cond = formatting_enabled,
-		}
-		maps.v["<Leader>lf"] = maps.n["<Leader>lf"]
-
 		-- TODO: Remove mapping after dropping support for Neovim v0.9, it's automatic
 		if vim.fn.has("nvim-0.10") == 0 then
 			maps.n["K"] = {
