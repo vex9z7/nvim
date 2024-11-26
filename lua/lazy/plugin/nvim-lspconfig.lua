@@ -24,9 +24,9 @@ return {
 			ensure_installed = {
 				-- typescript/javascript
 				"tsserver",
-				"stylelint_lsp",
 				"cssmodules_ls",
 				-- css related
+				"stylelint_lsp",
 				"cssls",
 				-- graphql
 				"graphql",
