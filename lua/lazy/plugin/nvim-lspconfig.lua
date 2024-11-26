@@ -28,6 +28,8 @@ return {
 				"cssmodules_ls",
 				-- css related
 				"cssls",
+				-- graphql
+				"graphql",
 				-- python
 				"pyright",
 				-- lua

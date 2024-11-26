@@ -63,6 +63,7 @@ return {
 			json = { "prettierd" },
 			yaml = { "prettierd" },
 			markdown = { "prettierd" },
+			graphql = { "prettierd" },
 		},
 		default_format_opts = { timeout_ms = 1500, lsp_format = "fallback" },
 		-- Set up format-on-save
