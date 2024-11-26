@@ -73,7 +73,9 @@ return {
 				return
 			end
 			return {
-				undojoin = true,
+				-- BUG: report the issue that occurs after format and undojoin right after undo
+				-- Vim:E790: undojoin is not allowed after undo
+				-- undojoin = true,
 			}
 		end,
 	},
