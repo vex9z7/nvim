@@ -167,6 +167,7 @@ local function setup()
             { name = "nvim_lsp_signature_help" },
             { name = "luasnip" }, -- For luasnip users.
             { name = "nvim-cmp-ts-tag-close" },
+            { name = "lazydev" }, -- optional completion source for require statements and module annotations
         }, {
             {
                 name = "color_names",
