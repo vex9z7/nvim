@@ -12,7 +12,6 @@ return {
     "saadparwaiz1/cmp_luasnip",
 
     "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-calc",
     "f3fora/cmp-spell",
     "uga-rosa/cmp-dictionary",
     "nat-418/cmp-color-names.nvim",
