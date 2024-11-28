@@ -143,7 +143,7 @@ local function setup()
             end, { "i" }),
 
             ["<C-n>"] = function()
-                if not cmp.visible() then
+                if cmp.visible() then
                     cmp.select_next_item({
                         behavior = cmp.SelectBehavior.Select,
                         count = 1,
