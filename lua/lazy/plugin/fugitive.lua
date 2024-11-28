@@ -1,6 +1,6 @@
 return {
     "tpope/vim-fugitive",
     config = function()
-      -- insert config here
-    end
+        -- insert config here
+    end,
 }

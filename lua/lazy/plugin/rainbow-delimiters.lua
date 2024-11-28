@@ -1,6 +1,5 @@
 return {
-  "HiPhish/rainbow-delimiters.nvim",
-  event = "VeryLazy",
-  config = function()
-  end,
+    "HiPhish/rainbow-delimiters.nvim",
+    event = "VeryLazy",
+    config = function() end,
 }

@@ -3,7 +3,6 @@ vim.opt.guicursor = ""
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-
 -- Config line break and wrap
 
 -- hard wrap
@@ -12,11 +11,11 @@ vim.opt.textwidth = 0
 -- soft wrap
 vim.opt.wrap = true
 vim.opt.linebreak = true
-vim.opt.showbreak = ' 󱞩 '
+vim.opt.showbreak = " 󱞩 "
 
 -- FIXME: setting columns doesn't fit to the theme color
 -- vertical line, only serves as a visual aid
-local buffer_columns = 80;
+local buffer_columns = 80
 vim.opt.colorcolumn = tostring(buffer_columns)
 -- actually width including numberwidth
 vim.opt.columns = buffer_columns + 4 + 1 + 2 -- TODO: figure out why need 2 extra columns
@@ -37,8 +36,6 @@ vim.opt.smartindent = true
 
 -- always use the clipboard
 vim.opt.clipboard:append("unnamedplus")
-
-
 
 vim.opt.swapfile = false
 vim.opt.backup = false
@@ -67,10 +64,10 @@ vim.opt.updatetime = 50
 -- see at https://github.com/epwalsh/obsidian.nvim/issues/286#issuecomment-1877258732
 vim.opt.conceallevel = 1
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.tabstop = 2
-    vim.opt_local.softtabstop = 2
-  end,
+    pattern = "markdown",
+    callback = function()
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.tabstop = 2
+        vim.opt_local.softtabstop = 2
+    end,
 })

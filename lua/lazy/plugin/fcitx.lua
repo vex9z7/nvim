@@ -1,3 +1,3 @@
 return {
-  'h-hg/fcitx.nvim'
+    "h-hg/fcitx.nvim",
 }

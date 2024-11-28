@@ -5,7 +5,7 @@ return {
         vim.o.timeout = true
         vim.o.timeoutlen = 300
     end,
-    config=function ()
+    config = function()
         local groups = {
             ["<Leader><Leader>g"] = { name = "Git" },
             ["<Leader><Leader>b"] = { name = "Buffers" },
@@ -16,13 +16,13 @@ return {
             ["<Leader><Leader>u"] = { name = "UI/UX" },
         }
         local wk = require("which-key")
-        for key,group in pairs(groups) do
-            wk.register( { [key] = group })
+        for key, group in pairs(groups) do
+            wk.register({ [key] = group })
         end
     end,
     opts = {
         -- your configuration comes here
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
-    }
+    },
 }
