@@ -84,5 +84,6 @@
   "vim-fugitive": { "branch": "master", "commit": "4f59455d2388e113bd510e85b310d15b9228ca0d" },
   "vim-tmux-navigator": { "branch": "master", "commit": "5b3c701686fb4e6629c100ed32e827edf8dad01e" },
   "which-key.nvim": { "branch": "main", "commit": "0099511294f16b81c696004fa6a403b0ae61f7a0" },
-  "windline.nvim": { "branch": "master", "commit": "58b6ddbaa50e7ce4c3b0f5ffc0fd71241791b2a7" }
+  "windline.nvim": { "branch": "master", "commit": "58b6ddbaa50e7ce4c3b0f5ffc0fd71241791b2a7" },
+  "zk-nvim": { "branch": "main", "commit": "42dc341d897ac4da3d4a9c5c506a36153473f021" }
 }
