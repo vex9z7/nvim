@@ -23,11 +23,10 @@ vim.opt.columns = buffer_columns + 4 + 1 + 2 -- TODO: figure out why need 2 extr
 
 -- e.g. Auctor erat et ut, id ut faucibus in, consequat pretium pellentesque tempor. Nunc natoque dignissim pellentesque, ultrices rutrum convallis nunc, magna purus dapibus erat. Rhoncus ante diam est, leo suspendisse est nullam, lorem maecenas vulputate porttitor. Nulla vestibulum maecenas etiam, rhoncus semper tortor metus, elit odio nulla dictum. Est parturient dapibus nunc, vitae vitae lobortis dui, tristique tempor sapien nulla. Nullam arcu dis malesuada, diam nullam cursus gravida, risus consequat eu sed. In ac posuere mus, feugiat vulputate id magna, vitae molestie eget et. Eu laoreet sed ornare, eros viverra quisque et, dui ac sem nec. Dui, ac, nibh efficitur.
 
-
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
--- vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = false
 
 -- search will be case sensitive if it contains an uppercase letter
 vim.opt.ignorecase = true
