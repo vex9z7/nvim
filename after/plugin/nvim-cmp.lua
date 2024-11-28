@@ -131,16 +131,6 @@ local function setup()
                     fallback()
                 end
             end, { "i" }),
-            ["<Cr>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.confirm({
-                        select = false,
-                        behavior = cmp.ConfirmBehavior.Insert,
-                    })
-                else
-                    fallback()
-                end
-            end, { "i" }),
 
             ["<C-n>"] = function()
                 if cmp.visible() then
@@ -170,9 +160,9 @@ local function setup()
         sources = cmp.config.sources({
             { name = "nvim_lsp" },
             { name = "nvim_lsp_signature_help" },
-            { name = "luasnip" }, -- For luasnip users.
             { name = "nvim-cmp-ts-tag-close" },
             { name = "lazydev" }, -- optional completion source for require statements and module annotations
+            { name = "luasnip" }, -- For luasnip users.
         }, {
             {
                 name = "color_names",

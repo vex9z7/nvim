@@ -1,22 +1,21 @@
+local models = {
+    "qwen2.5-coder:0.5b",
+    "qwen2.5-coder:1.5b",
+    "codegemma:2b",
+    "qwen2.5-coder:3b",
+}
+local model = models[2]
+
 return {
     "yuys13/collama.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     lazy = false,
-    enabled = true,
+    -- enabled = false,
     config = function()
-        -- could you help me to split the following models into lines
-
-        local models = {
-            "qwen2.5-coder:0.5b",
-            "qwen2.5-coder:1.5b",
-            "codegemma:2b",
-            "qwen2.5-coder:3b",
-        }
-
         ---@type CollamaConfig
         local config = {
             base_url = "http://localhost:11434/api/",
-            model = models[2],
+            model = model,
         }
 
         local augroup =
@@ -40,16 +39,14 @@ return {
             end,
         })
 
-        -- map accept key
-        -- vim.keymap.set("i", "<Tab>", function(fallback)
-        -- 	local state = require("collama.copilot.state")
-        -- 	if state ~= nil then
-        -- 		require("collama.copilot").accept()
-        -- 	else
-        -- 		fallback()
-        -- 	end
-        -- end, {})
-        --
-        -- vim.keymap.set("n", "<Cr>", require("collama.copilot").accept)
+        -- accept keymap
+        vim.keymap.set("i", "<Cr>", function()
+            local result = require("collama.copilot.state").get_result()
+            if result then
+                require("collama.copilot").accept()
+            else
+                vim.api.nvim_feedkeys("\n", "n", false)
+            end
+        end, { remap = true })
     end,
 }
