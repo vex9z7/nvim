@@ -17,6 +17,7 @@
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "cmp-spell": { "branch": "master", "commit": "694a4e50809d6d645c1ea29015dad0c293f019d6" },
   "cmp_luasnip": { "branch": "master", "commit": "05a9ab28b53f71d1aece421ef32fee2cb857a843" },
+  "collama.nvim": { "branch": "main", "commit": "28f76e05b6a5dea8d80802fa3f783a2796f7b880" },
   "conform.nvim": { "branch": "master", "commit": "f1125f8eace158255cf55772ce039aaf178a6b42" },
   "cspell.nvim": { "branch": "main", "commit": "508b64a23bd8f9473c59d083a92712486f6f138d" },
   "cyberdream.nvim": { "branch": "main", "commit": "1801de891253b80e2e5b8fdc7c3faf54f49b93ae" },
