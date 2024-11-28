@@ -70,8 +70,7 @@ local function setup()
     cmp.setup({
         experimental = { ghost_text = true },
         completion = { completeopt = "menu,menuone,noinsert" },
-        -- preselect = cmp.PreselectMode.None,
-
+        preselect = cmp.PreselectMode.Item,
         formatting = {
             expandable_indicator = true,
             fields = { "kind", "abbr", "menu" },
@@ -125,42 +124,47 @@ local function setup()
             ["<C-y>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.confirm({
-                        select = true,
-                        behavior = cmp.ConfirmBehavior.Replace,
+                        select = false,
+                        behavior = cmp.ConfirmBehavior.Insert,
                     })
-                    -- TODO: append () after method and function
-                    return
+                else
+                    fallback()
                 end
-                fallback()
-            end, { "i", "s" }),
+            end, { "i" }),
+            ["<Cr>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.confirm({
+                        select = false,
+                        behavior = cmp.ConfirmBehavior.Insert,
+                    })
+                else
+                    fallback()
+                end
+            end, { "i" }),
+
+            ["<C-n>"] = function()
+                if not cmp.visible() then
+                    cmp.select_next_item({
+                        behavior = cmp.SelectBehavior.Select,
+                        count = 1,
+                    })
+                else
+                    cmp.complete()
+                end
+            end,
+            ["<C-p>"] = function()
+                if cmp.visible() then
+                    cmp.select_prev_item({
+                        behavior = cmp.SelectBehavior.Select,
+                        count = 1,
+                    })
+                else
+                    cmp.complete()
+                end
+            end,
 
             ["<C-u>"] = cmp.mapping.scroll_docs(-4),
             ["<C-d>"] = cmp.mapping.scroll_docs(4),
-
-            ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item({
-                        behavior = cmp.SelectBehavior.Select,
-                    })
-                    return
-                end
-
-                fallback()
-            end, { "i", "s" }),
-
-            ["<Cr>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    if cmp.get_selected_entry() ~= nil then
-                        -- TODO: don't append parenthesis when confirming by Enter
-                        cmp.confirm({
-                            select = false,
-                            behavior = cmp.ConfirmBehavior.Replace,
-                        })
-                    end
-                    return
-                end
-                fallback()
-            end, { "i", "s" }),
         }),
 
         sources = cmp.config.sources({
