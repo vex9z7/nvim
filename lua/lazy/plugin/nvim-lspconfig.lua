@@ -23,7 +23,7 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = {
 				-- typescript/javascript
-				"tsserver",
+				"ts_ls",
 				"cssmodules_ls",
 				-- css related
 				"stylelint_lsp",
@@ -49,10 +49,10 @@ return {
 						capabilities = capabilities,
 					})
 				end,
-				["tsserver"] = function()
+				["ts_ls"] = function()
 					-- A workaround to fix the exception that occurs on jumping to a css style.
 					-- 2 Steps solution:
-					--    1. disable tsserver go to definition for it. See more details at https://github.com/neovim/neovim/issues/19237#issuecomment-2259638650
+					--    1. disable ts_ls go to definition for it. See more details at https://github.com/neovim/neovim/issues/19237#issuecomment-2259638650
 					--    2. install and config cssmodules-language-server from Mason. A nice catch from https://github.com/neovim/neovim/issues/19237#issuecomment-1509945822
 					local tsHandlers = {
 						["textDocument/definition"] = function(err, result, params, ...)
@@ -88,10 +88,10 @@ return {
 						end,
 					}
 
-					lspconfig.tsserver.setup({
+					lspconfig.ts_ls.setup({
 						handlers = tsHandlers,
 						on_attach = function(client)
-							-- disable the formatting from tsserver
+							-- disable the formatting from ts_ls
 							client.server_capabilities.documentFormattingProvider = false
 							client.server_capabilities.documentRangeFormattingProvider = false
 						end,
