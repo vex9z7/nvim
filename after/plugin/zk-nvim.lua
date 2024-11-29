@@ -22,23 +22,44 @@ local function setup()
         end)
     end
 
-    -- listing notes
-    vim.keymap.set({ "n" }, "<leader>zd", function()
-        local dailyTagUnion = table.concat({ "daily", "daily-notes" }, "|")
-        zk.edit({ tags = { dailyTagUnion }, sort = { "created-" } })
-    end, { noremap = true, desc = "daily notes" })
+    -- find notes
+    vim.keymap.set({ "n" }, "<leader>fv", function()
+        local finderTypes = {
+            "daily",
+            "zettel",
+            "project",
+            "area",
+            "all",
+        }
 
-    vim.keymap.set({ "n" }, "<leader>zn", function()
-        zk.edit({ tags = { "zettel" }, sort = defaultSortOption })
-    end, { noremap = true, desc = "notes" })
+        local finderOptions = {
+            ["daily"] = {
+                tags = { table.concat({ "daily", "daily-notes" }, "|") },
+                sort = { "created-" },
+            },
+            ["zettel"] = { tags = { "zettel" } },
+            ["area"] = { tags = { "area" } },
+            ["project"] = { tags = { "project" } },
+            ["all"] = {},
+        }
 
-    vim.keymap.set({ "n" }, "<leader>zp", function()
-        zk.edit({ tags = { "project" }, sort = defaultSortOption })
-    end, { noremap = true, desc = "projects" })
+        vim.ui.select(finderTypes, {
+            prompt = "Find from the vault",
+        }, function(finderType)
+            if finderType ~= nil then
+                local finderOption = finderOptions[finderType]
+                if finderOption then
+                    local opts = vim.tbl_extend(
+                        "keep",
+                        finderOption,
+                        { sort = defaultSortOption }
+                    )
 
-    vim.keymap.set({ "n" }, "<leader>za", function()
-        zk.edit({ tags = { "area" }, sort = defaultSortOption })
-    end, { noremap = true, desc = "areas" })
+                    return zk.edit(opts)
+                end
+            end
+        end)
+    end, { noremap = true, desc = "Find from the vault" })
 
     vim.keymap.set({ "n" }, "<leader>zt", function()
         zk.pick_tags({ sort = { "note-count-" } }, {}, function(selectedItems)
