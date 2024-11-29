@@ -121,6 +121,17 @@ local function setup()
         },
 
         mapping = cmp.mapping.preset.insert({
+
+            ["<Cr>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.confirm({
+                        select = false,
+                        behavior = cmp.ConfirmBehavior.Insert,
+                    })
+                else
+                    fallback()
+                end
+            end, { "i" }),
             ["<C-y>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.confirm({
