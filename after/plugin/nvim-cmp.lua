@@ -68,7 +68,7 @@ local function setup()
     local lspkind = require("lspkind")
 
     cmp.setup({
-        -- experimental = { ghost_text = true },
+        experimental = { ghost_text = true },
         completion = { completeopt = "menu,menuone,noinsert" },
         preselect = cmp.PreselectMode.Item,
         formatting = {
