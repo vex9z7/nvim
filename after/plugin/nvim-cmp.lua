@@ -131,6 +131,13 @@ local function setup()
                     fallback()
                 end
             end, { "i" }),
+            ["<esc>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.close()
+                else
+                    fallback()
+                end
+            end, { "i" }),
 
             ["<C-n>"] = function()
                 if cmp.visible() then
