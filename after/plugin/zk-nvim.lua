@@ -22,6 +22,24 @@ local function setup()
         end)
     end
 
+    local function searchByTags()
+        return zk.pick_tags(
+            { sort = { "note-count-" } },
+            {},
+            function(selectedItems)
+                local selectedTags = {}
+                for _, item in ipairs(selectedItems) do
+                    table.insert(selectedTags, item.name)
+                end
+
+                return zk.edit({
+                    tags = selectedTags,
+                    sort = defaultSortOption,
+                })
+            end
+        )
+    end
+
     -- find notes
     vim.keymap.set({ "n" }, "<leader>fv", function()
         local finderTypes = {
@@ -29,6 +47,7 @@ local function setup()
             "zettel",
             "project",
             "area",
+            "tags",
             "all",
         }
 
@@ -47,34 +66,25 @@ local function setup()
             prompt = "Find from the vault",
         }, function(finderType)
             if finderType ~= nil then
-                local finderOption = finderOptions[finderType]
-                if finderOption then
-                    local opts = vim.tbl_extend(
-                        "keep",
-                        finderOption,
-                        { sort = defaultSortOption }
-                    )
-
-                    return zk.edit(opts)
+                if finderType == "tags" then
+                    return searchByTags()
+                else
+                    local finderOption = finderOptions[finderType]
+                    if finderOption then
+                        local opts = vim.tbl_extend(
+                            "keep",
+                            finderOption,
+                            { sort = defaultSortOption }
+                        )
+                        return zk.edit(opts)
+                    end
                 end
             end
         end)
     end, { noremap = true, desc = "Find from the vault" })
 
-    vim.keymap.set({ "n" }, "<leader>zt", function()
-        zk.pick_tags({ sort = { "note-count-" } }, {}, function(selectedItems)
-            local selectedTags = {}
-            for _, item in ipairs(selectedItems) do
-                table.insert(selectedTags, item.name)
-            end
-
-            zk.edit({ tags = selectedTags, sort = defaultSortOption })
-        end)
-    end, { noremap = true, desc = "tags" })
-
     vim.keymap.set({ "n" }, "<leader>zb", function()
         local currentBufferName = vim.fn.bufname("%")
-
         zk.edit({ linkTo = { currentBufferName }, sort = defaultSortOption })
     end, { noremap = true, desc = "backlinks" })
 
