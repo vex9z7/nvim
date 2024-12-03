@@ -72,7 +72,51 @@ local function findNote()
     end)
 end
 
+local function newNote()
+    -- TODO: decouple the config related things from functionalities and keep them in sync with the config
+    local noteTypes = {
+        "daily",
+        "zettel",
+        "project",
+        "area",
+    }
 
+    ---@type {[string]:string}
+    local notePathes = {
+        ["daily"] = "daily",
+        ["zettel"] = "zettel",
+        ["area"] = "areas",
+        ["project"] = "projects",
+    }
+
+    vim.ui.select(noteTypes, {
+        prompt = "Create a new note",
+    }, function(noteType)
+        if noteType ~= nil then
+            ---@type {title:string?,content:string?,dir:string?,group:string?,template:string?,extra:table?,date:string?,edit:boolean?,dryRun:boolean?,insertLinkAtLocation:table?,insertContentAtLocation:table?}
+            local options = {
+                dir = notePathes[noteType],
+                group = noteType,
+                edit = true,
+            }
+
+            local function createNote(title)
+                if title then
+                    options.title = title
+                end
+                zkApi.new(nil, options, function(err, stats)
+                    vim.print({ err = err, stats = stats })
+                end)
+            end
+
+            if noteType ~= "daily" then
+                inputTitle(createNote)
+            else
+                createNote()
+            end
+        end
+    end)
+end
 
 local function setup()
     local function selectFromTemplates(onConfirm)
@@ -100,6 +144,14 @@ local function setup()
         "<leader>zf",
         findNote,
         { noremap = true, desc = "Find from the vault" }
+    )
+
+    -- new notes
+    vim.keymap.set(
+        { "n" },
+        "<leader>zn",
+        newNote,
+        { noremap = true, desc = "Create a new note" }
     )
 
     vim.keymap.set({ "n" }, "<leader>zb", function()
