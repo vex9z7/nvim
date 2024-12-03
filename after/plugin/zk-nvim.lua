@@ -1,8 +1,80 @@
-local function setup()
-    local zk = require("zk")
-    local commands = require("zk.commands")
-    local defaultSortOption = { "modified-", "created-" }
+local commands = require("zk.commands")
+local zk = require("zk")
+local zkApi = require("zk.api")
 
+local defaultSortOption = { "modified-", "created-" }
+
+local function inputTitle(onConfirm)
+    vim.ui.input({ prompt = "title" }, function(input)
+        if input ~= nil then
+            return onConfirm(input)
+        end
+    end)
+end
+
+local function searchByTags()
+    return zk.pick_tags(
+        { sort = { "note-count-" } },
+        {},
+        function(selectedItems)
+            local selectedTags = {}
+            for _, item in ipairs(selectedItems) do
+                table.insert(selectedTags, item.name)
+            end
+
+            return zk.edit({
+                tags = selectedTags,
+                sort = defaultSortOption,
+            })
+        end
+    )
+end
+
+local function findNote()
+    local finderTypes = {
+        "daily",
+        "zettel",
+        "project",
+        "area",
+        "tags",
+        "all",
+    }
+
+    local finderOptions = {
+        ["daily"] = {
+            tags = { table.concat({ "daily", "daily-notes" }, "|") },
+            sort = { "created-" },
+        },
+        ["zettel"] = { tags = { "zettel" } },
+        ["area"] = { tags = { "area" } },
+        ["project"] = { tags = { "project" } },
+        ["all"] = {},
+    }
+
+    vim.ui.select(finderTypes, {
+        prompt = "Find from the vault",
+    }, function(finderType)
+        if finderType ~= nil then
+            if finderType == "tags" then
+                return searchByTags()
+            else
+                local finderOption = finderOptions[finderType]
+                if finderOption then
+                    local opts = vim.tbl_extend(
+                        "keep",
+                        finderOption,
+                        { sort = defaultSortOption }
+                    )
+                    return zk.edit(opts)
+                end
+            end
+        end
+    end)
+end
+
+
+
+local function setup()
     local function selectFromTemplates(onConfirm)
         local templateChoices = { "zettel", "area", "project" }
         vim.ui.select(templateChoices, {
@@ -14,74 +86,21 @@ local function setup()
         end)
     end
 
-    local function inputTitle(onConfirm)
-        vim.ui.input({ prompt = "title" }, function(input)
-            if input ~= nil then
-                return onConfirm(input)
-            end
-        end)
-    end
-
-    local function searchByTags()
-        return zk.pick_tags(
-            { sort = { "note-count-" } },
-            {},
-            function(selectedItems)
-                local selectedTags = {}
-                for _, item in ipairs(selectedItems) do
-                    table.insert(selectedTags, item.name)
-                end
-
-                return zk.edit({
-                    tags = selectedTags,
-                    sort = defaultSortOption,
-                })
-            end
-        )
-    end
+    -- find notes
+    vim.keymap.set(
+        { "n" },
+        "<leader>fv",
+        findNote,
+        { noremap = true, desc = "Find from the vault" }
+    )
 
     -- find notes
-    vim.keymap.set({ "n" }, "<leader>fv", function()
-        local finderTypes = {
-            "daily",
-            "zettel",
-            "project",
-            "area",
-            "tags",
-            "all",
-        }
-
-        local finderOptions = {
-            ["daily"] = {
-                tags = { table.concat({ "daily", "daily-notes" }, "|") },
-                sort = { "created-" },
-            },
-            ["zettel"] = { tags = { "zettel" } },
-            ["area"] = { tags = { "area" } },
-            ["project"] = { tags = { "project" } },
-            ["all"] = {},
-        }
-
-        vim.ui.select(finderTypes, {
-            prompt = "Find from the vault",
-        }, function(finderType)
-            if finderType ~= nil then
-                if finderType == "tags" then
-                    return searchByTags()
-                else
-                    local finderOption = finderOptions[finderType]
-                    if finderOption then
-                        local opts = vim.tbl_extend(
-                            "keep",
-                            finderOption,
-                            { sort = defaultSortOption }
-                        )
-                        return zk.edit(opts)
-                    end
-                end
-            end
-        end)
-    end, { noremap = true, desc = "Find from the vault" })
+    vim.keymap.set(
+        { "n" },
+        "<leader>zf",
+        findNote,
+        { noremap = true, desc = "Find from the vault" }
+    )
 
     vim.keymap.set({ "n" }, "<leader>zb", function()
         local currentBufferName = vim.fn.bufname("%")
