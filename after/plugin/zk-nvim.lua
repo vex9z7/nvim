@@ -2,6 +2,13 @@ local commands = require("zk.commands")
 local zk = require("zk")
 local zkApi = require("zk.api")
 
+--- see at https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#position
+--- Line position in a document (zero-based).
+---	Character offset on a line in a document (zero-based). The meaning of this offset is determined by the negotiated `PositionEncodingKind`. If the character value is greater than the line length it defaults back to the line length.
+---
+---@alias LspPosition { line: integer, character:integer }
+---@alias LspLocation { uri: string, range: { end: LspPosition, start: LspPosition }}
+
 local defaultSortOption = { "modified-", "created-" }
 
 local function inputTitle(onConfirm)
@@ -118,6 +125,84 @@ local function newNote()
     end)
 end
 
+local function extratLinesToNote()
+    if vim.fn.mode() ~= "V" then
+        return
+    end
+    -- TODO: decouple the config related things from functionalities and keep them in sync with the config
+    local noteTypes = {
+        "zettel",
+        "project",
+        "area",
+    }
+
+    ---@type {[string]:string}
+    local notePathes = {
+        ["zettel"] = "zettel",
+        ["area"] = "areas",
+        ["project"] = "projects",
+    }
+
+    ---comment
+    ---@return integer[]
+    ---@return integer[]
+    local function getVisualPositions()
+        local cursorPosition = vim.fn.getpos(".")
+        local visualPosition = vim.fn.getpos("v")
+        for i = 2, 3 do
+            if cursorPosition[i] ~= visualPosition[i] then
+                if cursorPosition[i] > visualPosition[i] then
+                    return visualPosition, cursorPosition
+                else
+                    break
+                end
+            end
+        end
+        return cursorPosition, visualPosition
+    end
+
+    local visualStartPosition, visualEndPosition = getVisualPositions()
+
+    -- get selectedContent
+    local lines = vim.fn.getregion(
+        visualStartPosition,
+        visualEndPosition,
+        { type = vim.fn.mode() }
+    )
+    local selectedContent = table.concat(lines, "\n")
+
+    local location = vim.lsp.util.make_given_range_params(
+        { visualStartPosition[2], 0 },
+        { visualEndPosition[2], #vim.fn.getline(visualEndPosition[2]) },
+        0
+    )
+    location.uri = location.textDocument.uri
+
+    vim.ui.select(noteTypes, {
+        prompt = "Extract to template",
+    }, function(noteType)
+        if noteType ~= nil then
+            local function createNote(title)
+                ---@type {title:string?,content:string?,dir:string?,group:string?,template:string?,extra:table?,date:string?,edit:boolean?,dryRun:boolean?,insertLinkAtLocation:LspLocation?,insertContentAtLocation:table?}
+                local options = {
+                    dir = notePathes[noteType],
+                    group = noteType,
+                    title = title,
+                    edit = false,
+                    content = selectedContent,
+                    insertLinkAtLocation = location,
+                }
+
+                zkApi.new(nil, options, function(err)
+                    assert(not err, tostring(err))
+                end)
+            end
+
+            inputTitle(createNote)
+        end
+    end)
+end
+
 local function setup()
     local function selectFromTemplates(onConfirm)
         local templateChoices = { "zettel", "area", "project" }
@@ -164,22 +249,12 @@ local function setup()
         insertLinkFn({ sort = defaultSortOption })
     end, { noremap = true, desc = "insert link" })
 
-    vim.keymap.set({ "o", "x" }, "<leader>ze", function()
-        -- FIXME: lsp range selection error
-        -- use more primitive api instead
-        -- FIXME: use correct filepath
-        selectFromTemplates(function(template)
-            return inputTitle(function(title)
-                local newFromContentSelection =
-                    commands.get("ZkNewFromContentSelection")
-                newFromContentSelection({
-                    title = title,
-                    group = template,
-                    edit = false,
-                })
-            end)
-        end)
-    end, { noremap = true, desc = "Extract into note" })
+    vim.keymap.set(
+        { "o", "x" },
+        "<leader>ze",
+        extratLinesToNote,
+        { noremap = true, desc = "Extract the selected lines into note" }
+    )
 
     vim.keymap.set({ "n", "o", "x" }, "<leader>zT", function()
         vim.print("zk test")
