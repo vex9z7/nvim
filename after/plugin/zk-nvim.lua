@@ -204,17 +204,6 @@ local function extratLinesToNote()
 end
 
 local function setup()
-    local function selectFromTemplates(onConfirm)
-        local templateChoices = { "zettel", "area", "project" }
-        vim.ui.select(templateChoices, {
-            prompt = "Select a template",
-        }, function(choice)
-            if choice ~= nil then
-                return onConfirm(choice)
-            end
-        end)
-    end
-
     -- find notes
     vim.keymap.set(
         { "n" },
@@ -239,18 +228,21 @@ local function setup()
         { noremap = true, desc = "Create a new note" }
     )
 
+    -- show backlinks
     vim.keymap.set({ "n" }, "<leader>zb", function()
         local currentBufferName = vim.fn.bufname("%")
         zk.edit({ linkTo = { currentBufferName }, sort = defaultSortOption })
     end, { noremap = true, desc = "backlinks" })
 
+    -- insert link using picker
     vim.keymap.set({ "n" }, "<leader>zil", function()
         local insertLinkFn = commands.get("ZkInsertLink")
         insertLinkFn({ sort = defaultSortOption })
     end, { noremap = true, desc = "insert link" })
 
+    -- extrat lines to note
     vim.keymap.set(
-        { "o", "x" },
+        { "v" },
         "<leader>ze",
         extratLinesToNote,
         { noremap = true, desc = "Extract the selected lines into note" }
