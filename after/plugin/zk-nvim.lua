@@ -9,6 +9,8 @@ local zkApi = require("zk.api")
 ---@alias LspPosition { line: integer, character:integer }
 ---@alias LspLocation { uri: string, range: { end: LspPosition, start: LspPosition }}
 
+---@alias NewNoteOption {title:string?,content:string?,dir:string?,group:string?,template:string?,extra:table?,date:string?,edit:boolean?,dryRun:boolean?,insertLinkAtLocation:LspLocation?,insertContentAtLocation:LspLocation?}
+
 local defaultSortOption = { "modified-", "created-" }
 
 local function inputTitle(onConfirm)
@@ -100,7 +102,7 @@ local function newNote()
         prompt = "Create a new note",
     }, function(noteType)
         if noteType ~= nil then
-            ---@type {title:string?,content:string?,dir:string?,group:string?,template:string?,extra:table?,date:string?,edit:boolean?,dryRun:boolean?,insertLinkAtLocation:table?,insertContentAtLocation:table?}
+            ---@type NewNoteOption
             local options = {
                 dir = notePathes[noteType],
                 group = noteType,
@@ -183,7 +185,7 @@ local function extratLinesToNote()
     }, function(noteType)
         if noteType ~= nil then
             local function createNote(title)
-                ---@type {title:string?,content:string?,dir:string?,group:string?,template:string?,extra:table?,date:string?,edit:boolean?,dryRun:boolean?,insertLinkAtLocation:LspLocation?,insertContentAtLocation:table?}
+                ---@type NewNoteOption
                 local options = {
                     dir = notePathes[noteType],
                     group = noteType,
