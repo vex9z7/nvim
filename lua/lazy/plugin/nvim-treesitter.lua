@@ -8,8 +8,15 @@ return {
         require("nvim-treesitter.configs").setup({
             -- A list of parser names, or "all"
             -- see the full list at https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#supported-languages
-            ensure_installed = "all",
-
+            ensure_installed = {
+                "c",
+                "lua",
+                "vim",
+                "vimdoc",
+                "query",
+                "markdown",
+                "markdown_inline",
+            },
             -- Install parsers synchronously (only applied to `ensure_installed`)
             sync_install = false,
 
@@ -30,90 +37,6 @@ return {
                 -- Using this option may slow down your editor, and you may see some duplicate highlights.
                 -- Instead of true it can also be a list of languages
                 additional_vim_regex_highlighting = { "markdown" },
-            },
-            textobjects = {
-                select = {
-                    enable = true,
-                    lookahead = true,
-                    keymaps = {
-                        ["af"] = {
-                            query = "@function.outer",
-                            desc = "function outer",
-                        },
-                        ["if"] = {
-                            query = "@function.inner",
-                            desc = "function.inner",
-                        },
-                        ["ac"] = {
-                            query = "@class.outer",
-                            desc = "class.outer",
-                        },
-                        ["ic"] = {
-                            query = "@class.inner",
-                            desc = "class.inner",
-                        },
-                        ["a,"] = {
-                            query = "@parameter.outer",
-                            desc = "parameter.outer",
-                        },
-                        ["i,"] = {
-                            query = "@parameter.inner",
-                            desc = "parameter.inner",
-                        },
-                    },
-                },
-                move = {
-                    enable = true,
-                    set_jumps = true,
-                    goto_next_start = {
-                        ["<leader>]f"] = {
-                            query = "@function.outer",
-                            desc = "function.outer",
-                        },
-                        ["<leader>]c"] = {
-                            query = "@class.outer",
-                            desc = "class.outer",
-                        },
-                        ["<leader>],"] = {
-                            query = "@parameter.inner",
-                            desc = "parameter.inner",
-                        },
-                    },
-                    goto_next_end = {
-                        ["<leader>]F"] = {
-                            query = "@function.outer",
-                            desc = "function.outer",
-                        },
-                        ["<leader>]C"] = {
-                            query = "@class.outer",
-                            desc = "class.outer",
-                        },
-                    },
-                    goto_previous_start = {
-                        ["<leader>[f"] = {
-                            query = "@function.outer",
-                            desc = "function.outer",
-                        },
-                        ["<leader>[c"] = {
-                            query = "@class.outer",
-                            desc = "class.outer",
-                        },
-                        ["<leader>[,"] = {
-                            query = "@parameter.inner",
-                            desc = "parameter.inner",
-                        },
-                    },
-                    goto_previous_end = {
-                        ["<leader>[F"] = {
-                            query = "@function.outer",
-                            desc = "function.outer",
-                        },
-                        ["<leader>[C"] = {
-                            query = "@class.outer",
-                            desc = "class.outer",
-                        },
-                    },
-                },
             },
         })
 
