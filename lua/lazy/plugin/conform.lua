@@ -6,32 +6,6 @@ return {
         -- Support toggling auto formating
         -- see https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md#command-to-toggle-format-on-save
         {
-            "<leader><leader>uf",
-            function()
-                vim.b.disable_autoformat = not vim.b.disable_autoformat
-                if vim.b.disable_autoformat then
-                    vim.print("auto formatter disabled (buffer)")
-                else
-                    vim.print("auto formatter enabled (buffer)")
-                end
-            end,
-            mode = { "v", "n" },
-            desc = "Toggle autoformatting (buffer)",
-        },
-        {
-            "<leader><leader>uF",
-            function()
-                vim.g.disable_autoformat = not vim.g.disable_autoformat
-                if vim.g.disable_autoformat then
-                    vim.print("auto formatter disabled (global)")
-                else
-                    vim.print("auto formatter enabled (global)")
-                end
-            end,
-            mode = { "v", "n" },
-            desc = "Toggle autoformatting (global)",
-        },
-        {
             "<leader><leader>lf",
             function()
                 local bufnr = vim.api.nvim_get_current_buf()
