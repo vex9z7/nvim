@@ -11,27 +11,31 @@ return {
                 changedelete = { text = "~" },
                 untracked = { text = "┆" },
             },
+            signs_staged = {
+                add = { text = "┃" },
+                change = { text = "┃" },
+                delete = { text = "_" },
+                topdelete = { text = "‾" },
+                changedelete = { text = "~" },
+                untracked = { text = "┆" },
+            },
+            signs_staged_enable = true,
             signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
             numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
             linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
             word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
-            watch_gitdir = {
-                follow_files = true,
-            },
+            watch_gitdir = { follow_files = true },
             auto_attach = true,
             attach_to_untracked = false,
-            current_line_blame = true,-- Toggle with `:Gitsigns toggle_current_line_blame`
+            current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
             current_line_blame_opts = {
                 virt_text = true,
                 virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
                 delay = 1000,
-                ignore_whitespace = false,
+                ignore_whitespace = true,
                 virt_text_priority = 100,
             },
             current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
-            current_line_blame_formatter_opts = {
-                relative_time = false,
-            },
             sign_priority = 6,
             update_debounce = 100,
             status_formatter = nil, -- Use default
@@ -50,23 +54,23 @@ return {
                 -- maps.n["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
                 maps.n["]g"] = {
                     function()
-                        require("gitsigns").next_hunk()
+                        require("gitsigns").nav_hunk("next")
                     end,
                     desc = "Next Git hunk",
                 }
                 maps.n["[g"] = {
                     function()
-                        require("gitsigns").prev_hunk()
+                        require("gitsigns").nav_hunk("prev")
                     end,
                     desc = "Previous Git hunk",
                 }
-                maps.n["<Leader>gl"] = {
+                maps.n["<Leader>gb"] = {
                     function()
                         require("gitsigns").blame_line()
                     end,
                     desc = "View Git blame",
                 }
-                maps.n["<Leader>gL"] = {
+                maps.n["<Leader>gB"] = {
                     function()
                         require("gitsigns").blame_line({ full = true })
                     end,
@@ -78,13 +82,13 @@ return {
                     end,
                     desc = "Preview Git hunk",
                 }
-                maps.n["<Leader>gh"] = {
+                maps.n["<Leader>gr"] = {
                     function()
                         require("gitsigns").reset_hunk()
                     end,
                     desc = "Reset Git hunk",
                 }
-                maps.n["<Leader>gr"] = {
+                maps.n["<Leader>gR"] = {
                     function()
                         require("gitsigns").reset_buffer()
                     end,
@@ -118,37 +122,15 @@ return {
 
                 for mode, mode_maps in pairs(maps) do
                     for astro_key, map in pairs(mode_maps) do
-                        local key = string.sub(astro_key, 1, #"<Leader>")
-                                    == "<Leader>"
-                                and "<Leader>" .. astro_key
-                            or astro_key
-                        vim.keymap.set(mode, key, map[1], { desc = map.desc })
+                        vim.keymap.set(
+                            mode,
+                            astro_key,
+                            map[1],
+                            { desc = map.desc }
+                        )
                     end
                 end
-
-                -- Text object
-                vim.keymap.set(
-                    { "o", "x" },
-                    "ih",
-                    ":<C-U>Gitsigns select_hunk<CR>",
-                    { desc = "git hunk", buffer = bufnr }
-                )
             end,
         })
     end,
-    -- opts = function()
-    --     -- local get_icon = require("astroui").get_icon
-    --     return {
-    --         -- signs = {
-    --         --   add = { text = get_icon "GitSign" },
-    --         --   change = { text = get_icon "GitSign" },
-    --         --   delete = { text = get_icon "GitSign" },
-    --         --   topdelete = { text = get_icon "GitSign" },
-    --         --   changedelete = { text = get_icon "GitSign" },
-    --         --   untracked = { text = get_icon "GitSign" },
-    --         -- },
-    --         -- worktrees = require("astrocore").config.git_worktrees,
-    --     }
-    -- end,
 }
-
