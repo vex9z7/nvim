@@ -66,6 +66,18 @@ return {
             yaml = { "prettierd" },
             markdown = { "prettierd" },
             graphql = { "prettierd" },
+            xml = { "xmlformatter" },
+        },
+        formatters = {
+            xmlformatter = {
+                prepend_args = {
+                    "--selfclose",
+                    "--blanks",
+                    "--indent",
+                    "2",
+                    "--preserve-attributes",
+                },
+            },
         },
         default_format_opts = { timeout_ms = 1500, lsp_format = "fallback" },
         -- Set up format-on-save
