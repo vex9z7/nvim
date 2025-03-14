@@ -7,6 +7,7 @@ return {
         max_size = 20,
         siblings = true,
         enabled = true,
+        cursor = true,
     },
     -- animate scopes. Enabled by default for Neovim >= 0.10
     -- Works on older versions but has to trigger redraws during animation.

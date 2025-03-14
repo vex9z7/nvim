@@ -1,6 +1,7 @@
 -- https://github.com/folke/noice.nvim
 return {
     "folke/noice.nvim",
+    -- enabled = false,
     event = "VeryLazy",
     ---@module "noice"
     ---@type NoiceConfig
@@ -8,10 +9,15 @@ return {
         -- add any options here
         notify = { enabled = false },
         lsp = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
-            -- INFO: render-markdown messes up the override
-            ["vim.lsp.util.stylize_markdown"] = false,
-            ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+            override = {
+                ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+                -- INFO: render-markdown messes up the override
+                ["vim.lsp.util.stylize_markdown"] = false,
+                ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+            },
+            signature = {
+                enabled = false,
+            },
         },
         -- you can enable a preset for easier configuration
         presets = {

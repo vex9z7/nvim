@@ -39,11 +39,11 @@ local function setup()
         hop.hint_vertical({ direction = directions.AFTER_CURSOR })
     end, { noremap = true, desc = "hop down" })
 
-    vim.keymap.set({ "n", "o", "x" }, "<leader>s", function()
-        hop.hint_patterns({
-            multi_windows = true,
-        }, "[^0-9A-Za-z \t]")
-    end, { noremap = true, desc = "hop to non alphanumeric symbol" })
+    -- vim.keymap.set({ "n", "o", "x" }, "<leader>s", function()
+    --     hop.hint_patterns({
+    --         multi_windows = true,
+    --     }, "[^0-9A-Za-z \t]")
+    -- end, { noremap = true, desc = "hop to non alphanumeric symbol" })
 end
 
 -- TODO: fix the issue that the direction does not work with multi_windows

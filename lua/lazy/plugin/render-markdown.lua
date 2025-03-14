@@ -11,7 +11,7 @@ return {
         heading = {
             position = "overlay",
             width = "block",
-            left_pad = 1,
+            left_pad = 0,
         },
         code = {
             -- style = 'language',

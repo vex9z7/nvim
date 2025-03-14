@@ -10,7 +10,7 @@ return {
     "yuys13/collama.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     lazy = false,
-    -- enabled = false,
+    enabled = false,
     config = function()
         ---@type CollamaConfig
         local config = {

@@ -2,17 +2,17 @@
 -- see https://github.com/epwalsh/obsidian.nvim?tab=readme-ov-file#configuration-options
 
 local DAILY_NOTES_TAG = "daily-notes"
-
 local vaultRoot = "~/Documents/the-vault/"
+local zettelRoot = "zettel/"
+
 return {
     "epwalsh/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
-    lazy = true,
-    -- only load obsidian.nvim for markdown files in your vault:
+    lazy = true, -- only load obsidian.nvim for markdown files in your vault:
+    enabled = false,
     event = {
         -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
         -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
-
         "BufReadPre "
             .. vaultRoot
             .. "**.md",
@@ -70,7 +70,7 @@ return {
     opts = {
         workspaces = {
             {
-                name = "overall",
+                name = "The Vault",
                 path = "~/Documents/the-vault",
             },
         },
@@ -78,7 +78,7 @@ return {
         daily_notes = {
             -- Optional, if you keep daily notes in a separate directory.
             -- folder = "notes/dailies",
-            folder = "mujin/daily",
+            folder = "daily",
             -- Optional, if you want to change the date format for the ID of daily notes.
             date_format = "%Y-%m-%d",
             -- Optional, if you want to change the date format of the default alias of daily notes.
@@ -107,6 +107,12 @@ return {
             },
             -- TODO:
             -- -- Toggle check-boxes.
+            ["<leader>oc"] = {
+                action = function()
+                    return require("obsidian").util.toggle_checkbox()
+                end,
+                opts = { buffer = true },
+            },
             -- -- Smart action depending on context, either follow link or toggle checkbox.
             -- ["<cr>"] = {
             --   action = function()
@@ -124,10 +130,21 @@ return {
             -- In this case a note with the title 'My new note' will be given an ID that looks
             -- like '1657296016-my-new-note', and therefore the file name '1657296016-my-new-note.md'
             local suffix = ""
+            -- if title ~= nil then
+            --   -- If title is given, transform it into valid file name.
+            --   suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+            -- else
+            --   -- If title is nil, just add 4 random uppercase letters to the suffix.
+            --   for _ = 1, 4 do
+            --     suffix = suffix .. string.char(math.random(65, 90))
+            --   end
+            -- end
+
             for _ = 1, 4 do
                 suffix = suffix .. string.char(math.random(65, 90))
             end
-            return tostring(os.time()) .. "-" .. suffix
+
+            return zettelRoot .. tostring(os.time()) .. "-" .. suffix
         end,
 
         -- Optional, alternatively you can customize the frontmatter data.
@@ -183,15 +200,13 @@ return {
             -- Define how various check-boxes are displayed
             checkboxes = {
                 -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
-                [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-                ["x"] = { char = "", hl_group = "ObsidianDone" },
-                [">"] = { char = "", hl_group = "ObsidianRightArrow" },
-                ["~"] = { char = "󰰱", hl_group = "ObsidianTilde" },
-                ["!"] = { char = "", hl_group = "ObsidianImportant" },
-                -- Replace the above with this if you don't have a patched font:
-                -- [" "] = { char = "☐", hl_group = "ObsidianTodo" },
-                -- ["x"] = { char = "✔", hl_group = "ObsidianDone" },
-
+                [" "] = { char = "", hl_group = "ObsidianIncompleteTask" },
+                ["x"] = { char = "", hl_group = "ObsidianCompletedTask" },
+                [">"] = { char = "󰳟", hl_group = "ObsidianInProgressTask" },
+                ["="] = { char = "󰏥", hl_group = "ObsidianPausedTask" },
+                ["-"] = { char = "󰅙", hl_group = "ObsidianCanceledTask" },
+                ["!"] = { char = "", hl_group = "ObsidianImportantTask" },
+                ["?"] = { char = "", hl_group = "ObsidianQuestionTask" },
                 -- You can also add more custom ones...
             },
             -- Use bullet marks for non-checkbox lists.
@@ -208,11 +223,16 @@ return {
             block_ids = { hl_group = "ObsidianBlockID" },
             hl_groups = {
                 -- The options are passed directly to `vim.api.nvim_set_hl()`. See `:help nvim_set_hl`.
-                ObsidianTodo = { bold = true, fg = "#f78c6c" },
-                ObsidianDone = { bold = true, fg = "#89ddff" },
-                ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
-                ObsidianTilde = { bold = true, fg = "#ff5370" },
-                ObsidianImportant = { bold = true, fg = "#d73128" },
+
+                -- Task state color schema
+                ObsidianQuestionTask = { bold = true, fg = "#6a5acd" },
+                ObsidianCompletedTask = { bold = true, fg = "#2ecc71" },
+                ObsidianInProgressTask = { bold = true, fg = "#2ecc71" },
+                ObsidianPausedTask = { bold = true, fg = "#3498db" },
+                ObsidianIncompleteTask = { bold = true, fg = "#2ecc71" },
+                ObsidianCanceledTask = { bold = true, fg = "#ff5370" },
+                ObsidianImportantTask = { bold = true, fg = "#d73128" },
+
                 ObsidianBullet = { bold = true, fg = "#89ddff" },
                 ObsidianRefText = { underline = true, fg = "#c792ea" },
                 ObsidianExtLinkIcon = { fg = "#c792ea" },
@@ -237,3 +257,4 @@ return {
 -- :ObsidianFollowLink [vsplit|hsplit] to follow a note reference under the cursor, optionally opening it in a vertical or horizontal split.
 -- TODO: integrate it after switch to an emulator that supports image
 -- :ObsidianPasteImg [IMGNAME] to paste an image from the clipboard into the note at the cursor position by saving it to the vault and adding a markdown image link. You can configure the default folder to save images to with the attachments.img_folder option.
+-- ggi

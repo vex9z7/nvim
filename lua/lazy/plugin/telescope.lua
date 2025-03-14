@@ -4,7 +4,7 @@ return {
     tag = "0.1.6",
 
     dependencies = {
-        "nvim-lua/plenary.nvim",
+        "nvim-lua/plenary.nvim", -- must
         {
             "nvim-telescope/telescope-fzf-native.nvim",
             lazy = true,
@@ -17,6 +17,7 @@ return {
     },
 
     config = function()
+        local defaultOpts = { show_line = false }
         local builtin = require("telescope.builtin")
         local maps = { n = {}, i = {}, t = {}, v = {} }
 
@@ -30,13 +31,35 @@ return {
             }
             maps.n["<Leader>gc"] = {
                 function()
-                    builtin.git_commits({ use_file_path = true })
+                    builtin.git_commits({
+                        use_file_path = true,
+                        git_command = {
+                            "git",
+                            "log",
+                            -- https://stackoverflow.com/a/74216997/28387145
+                            "--no-show-signature",
+                            "--pretty=oneline",
+                            "--abbrev-commit",
+                            "--",
+                            ".",
+                        },
+                    })
                 end,
                 desc = "Git commits (repository)",
             }
             maps.n["<Leader>gC"] = {
                 function()
-                    builtin.git_bcommits({ use_file_path = true })
+                    builtin.git_bcommits({
+                        use_file_path = true,
+                        git_command = {
+                            "git",
+                            "log",
+                            -- https://stackoverflow.com/a/74216997/28387145
+                            "--no-show-signature",
+                            "--pretty=oneline",
+                            "--abbrev-commit",
+                        },
+                    })
                 end,
                 desc = "Git commits (current file)",
             }
@@ -85,13 +108,19 @@ return {
         }
         maps.n["<Leader>ff"] = {
             function()
-                builtin.find_files()
+                builtin.find_files(defaultOpts)
             end,
             desc = "Find files",
         }
         maps.n["<Leader>fF"] = {
             function()
-                builtin.find_files({ hidden = true, no_ignore = true })
+                builtin.find_files(
+                    vim.tbl_deep_extend(
+                        "force",
+                        defaultOpts,
+                        { hidden = true, no_ignore = true }
+                    )
+                )
             end,
             desc = "Find all files",
         }
@@ -140,20 +169,22 @@ return {
         if vim.fn.executable("rg") == 1 then
             maps.n["<Leader>fw"] = {
                 function()
-                    builtin.live_grep()
+                    builtin.live_grep(defaultOpts)
                 end,
                 desc = "Find words",
             }
             maps.n["<Leader>fW"] = {
                 function()
-                    builtin.live_grep({
-                        additional_args = function(args)
-                            return vim.list_extend(
-                                args,
-                                { "--hidden", "--no-ignore" }
-                            )
-                        end,
-                    })
+                    builtin.live_grep(
+                        vim.tbl_deep_extend("force", defaultOpts, {
+                            additional_args = function(args)
+                                return vim.list_extend(
+                                    args,
+                                    { "--hidden", "--no-ignore" }
+                                )
+                            end,
+                        })
+                    )
                 end,
                 desc = "Find words in all files",
             }
@@ -168,7 +199,7 @@ return {
         if vim.fn.has("nvim-0.10") == 1 then
             maps.n.gr = {
                 function()
-                    builtin.lsp_references()
+                    builtin.lsp_references(defaultOpts)
                 end,
                 desc = "Search references",
             }

@@ -21,6 +21,29 @@ local function inputTitle(onConfirm)
     end)
 end
 
+-- TODO: remove this wrapper when the api can respond the wikilink
+local function feedWikiLinkToCallback(notePath, callback)
+    zkApi.list(nil, {
+        select = {
+            "filename",
+            "title",
+            "path",
+        },
+        hrefs = {
+            notePath,
+        },
+    }, function(errr, notes)
+        vim.print({ err = errr, notes = notes })
+        local note = notes[1]
+        if note then
+            local title = note.title
+            local path = note.path
+            local wikiLink = ("[[%s| %s]]"):format(path, title)
+            callback(wikiLink)
+        end
+    end)
+end
+
 local function searchByTags()
     return zk.pick_tags(
         { sort = { "note-count-" } },
@@ -205,6 +228,78 @@ local function extratLinesToNote()
     end)
 end
 
+local function formatWithTemplate()
+    -- TODO: decouple the config related things from functionalities and keep them in sync with the config
+
+    local noteTypes = {
+        "zettel",
+        "project",
+        "area",
+    }
+
+    ---@type {[string]:string}
+    local notePathes = {
+        ["zettel"] = "zettel",
+        ["area"] = "areas",
+        ["project"] = "projects",
+    }
+
+    local bufferFilename = vim.fn.expand("%")
+    vim.print(bufferFilename)
+
+    local haha = vim.show_pos(0, 0, 0)
+    vim.print(haha)
+
+    local node = vim.treesitter.get_node({ pos = { 0, 0 } })
+    vim.print(node)
+
+    -- zkApi.list(nil, {
+    --     select = {
+    --         "title",
+    --         "filename",
+    --         "path",
+    --         "tags",
+    --         "created",
+    --         "content",
+    --     },
+    --     hrefs = { bufferFilename },
+    -- }, function(error, notes)
+    --     vim.print(error, notes)
+    -- end)
+
+    -- local selectedContent = table.concat(lines, "\n")
+    --
+    -- local location = vim.lsp.util.make_given_range_params(
+    --     { visualStartPosition[2], 0 },
+    --     { visualEndPosition[2], #vim.fn.getline(visualEndPosition[2]) },
+    --     0
+    -- )
+    -- location.uri = location.textDocument.uri
+    --
+    -- vim.ui.select(noteTypes, {
+    --     prompt = "Extract to template",
+    -- }, function(noteType)
+    --     if noteType ~= nil then
+    --         local function createNote(title)
+    --             ---@type {title:string?,content:string?,dir:string?,group:string?,template:string?,extra:table?,date:string?,edit:boolean?,dryRun:boolean?,insertLinkAtLocation:LspLocation?,insertContentAtLocation:table?}
+    --             local options = {
+    --                 dir = notePathes[noteType],
+    --                 group = noteType,
+    --                 title = title,
+    --                 edit = false,
+    --                 content = selectedContent,
+    --                 insertLinkAtLocation = location,
+    --             }
+    --
+    --             zkApi.new(nil, options, function(err)
+    --                 assert(not err, tostring(err))
+    --             end)
+    --         end
+    --
+    --         inputTitle(createNote)
+    --     end
+    -- end)
+end
 local function setup()
     -- find notes
     vim.keymap.set(
@@ -214,10 +309,10 @@ local function setup()
         { noremap = true, desc = "Find from the vault" }
     )
 
-    -- find notes
+    -- list notes
     vim.keymap.set(
         { "n" },
-        "<leader>zf",
+        "<leader>zl",
         findNote,
         { noremap = true, desc = "Find from the vault" }
     )
@@ -248,6 +343,14 @@ local function setup()
         "<leader>ze",
         extratLinesToNote,
         { noremap = true, desc = "Extract the selected lines into note" }
+    )
+
+    -- format with template
+    vim.keymap.set(
+        { "n" },
+        "<leader>zf",
+        formatWithTemplate,
+        { noremap = true, desc = "Format current note with template" }
     )
 
     vim.keymap.set({ "n", "o", "x" }, "<leader>zT", function()

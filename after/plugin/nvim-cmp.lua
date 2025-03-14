@@ -177,14 +177,14 @@ local function setup()
 
         sources = cmp.config.sources({
             { name = "nvim_lsp" },
-            { name = "nvim_lsp_signature_help" },
             { name = "nvim-cmp-ts-tag-close" },
             { name = "lazydev" }, -- optional completion source for require statements and module annotations
+            { name = "cmp-tw2css" }, -- For luasnip users.
             { name = "luasnip" }, -- For luasnip users.
-        }, {
-            {
-                name = "color_names",
-            },
+            { name = "color_names" },
+            { name = "npm", keyword_length = 3 }, -- For luasnip users.
+            -- { name = "minuet", max_item_count = 3 }, -- For luasnip users.
+            -- { name = "cmp_ai", max_item_count = 3 },
         }, {
             dictionary_source,
             {

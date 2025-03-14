@@ -28,9 +28,11 @@ local function setup()
                 i = {
                     ["<C-J>"] = actions.move_selection_next,
                     ["<C-K>"] = actions.move_selection_previous,
+                    ["<esc><esc>"] = actions.close,
                 },
+                n = { ["<esc>"] = actions.close },
             },
-            path_display = { "truncate" },
+            dynamic_preview_title = true,
         },
     })
 

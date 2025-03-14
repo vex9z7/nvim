@@ -1,6 +1,7 @@
 return {
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",
+    enabled = false,
     config = function()
         local tokenFilePath = vim.fn.expand("~/.config/openai.token")
         local content = vim.fn.readfile(tokenFilePath)
