@@ -1,4 +1,4 @@
-return({
+return {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
@@ -28,7 +28,7 @@ return({
         formatters_by_ft = {
             -- Conform will run multiple formatters sequentially
             lua = { "stylua" },
-            python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
+            python = { "darker" },
             rust = { "rustfmt" },
             javascript = { "eslint_d", "prettierd" },
             javascriptreact = { "eslint_d", "prettierd" },
@@ -67,4 +67,4 @@ return({
             }
         end,
     },
-})
+}
