@@ -18,6 +18,7 @@ return {
         words = require("lazy.plugin.snacks.words"),
         scope = require("lazy.plugin.snacks.scope"),
         statuscolumn = require("lazy.plugin.snacks.statuscolumn"),
+        image = require("lazy.plugin.snacks.image"),
         -- picker = require("lazy.plugin.snacks.picker"),
         -- gitbrowse = { enabled = true },
     },
