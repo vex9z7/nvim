@@ -38,8 +38,8 @@ return {
         -- render the image in a floating window
         -- only used if `opts.inline` is disabled
         float = true,
-        max_width = 80,
-        max_height = 40,
+        max_width = 40,
+        max_height = 30,
         -- Set to `true`, to conceal the image text when rendering inline.
         -- (experimental)
         ---@param lang string tree-sitter language
