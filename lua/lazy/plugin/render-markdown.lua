@@ -3,7 +3,6 @@ return {
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
         "nvim-tree/nvim-web-devicons",
-        "jbyuki/nabla.nvim",
     },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
@@ -111,13 +110,9 @@ return {
             -- Called before adding marks to the buffer for the first time.
             initial = function() end,
             -- Called after plugin renders a buffer.
-            render = function()
-                require("nabla").enable_virt({ autogen = true })
-            end,
+            render = function() end,
             -- Called after plugin clears a buffer.
-            clear = function()
-                require("nabla").disable_virt()
-            end,
+            clear = function() end,
         },
         completions = {
             -- Settings for blink.cmp completions source
@@ -837,7 +832,7 @@ return {
                 -- Used when not being rendered, get user setting.
                 default = vim.o.conceallevel,
                 -- Used when being rendered, concealed text is completely hidden.
-                rendered = 2, -- INFO: to support the latex rendering
+                rendered = 3,
             },
             -- @see :h 'concealcursor'
             concealcursor = {
