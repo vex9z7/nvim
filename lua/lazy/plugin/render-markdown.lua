@@ -3,6 +3,7 @@ return {
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
         "nvim-tree/nvim-web-devicons",
+        "jbyuki/nabla.nvim",
     },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
@@ -88,7 +89,7 @@ return {
         },
         latex = {
             -- Turn on / off latex rendering.
-            enabled = true,
+            enabled = false,
             -- Additional modes to render latex.
             render_modes = false,
             -- Executable used to convert latex formula to rendered unicode.
@@ -110,9 +111,13 @@ return {
             -- Called before adding marks to the buffer for the first time.
             initial = function() end,
             -- Called after plugin renders a buffer.
-            render = function() end,
+            render = function()
+                require("nabla").enable_virt({ autogen = true })
+            end,
             -- Called after plugin clears a buffer.
-            clear = function() end,
+            clear = function()
+                require("nabla").disable_virt()
+            end,
         },
         completions = {
             -- Settings for blink.cmp completions source
@@ -832,7 +837,7 @@ return {
                 -- Used when not being rendered, get user setting.
                 default = vim.o.conceallevel,
                 -- Used when being rendered, concealed text is completely hidden.
-                rendered = 3,
+                rendered = 2, -- INFO: to support the latex rendering
             },
             -- @see :h 'concealcursor'
             concealcursor = {
