@@ -1,1 +1,36 @@
-{"language":"en","version":"0.2","allowCompoundWords":true,"flagWords":["hte"],"words":["nvim","vim","itl","mujin","dev","cli","lsp","cmd","webui","itlhub","typia","unflatten","keyof","netrw","Pyright","supervisord","Rspack","Flatpak","indexedDB","CUDA","clicky","corne","Uniqlo","craco","dunst","Suspese","noice","Rsbuild"]}
+{
+  "flagWords": ["hte"],
+  "allowCompoundWords": true,
+  "language": "en",
+  "words": [
+    "nvim",
+    "vim",
+    "itl",
+    "mujin",
+    "dev",
+    "cli",
+    "lsp",
+    "cmd",
+    "webui",
+    "itlhub",
+    "typia",
+    "unflatten",
+    "keyof",
+    "netrw",
+    "Pyright",
+    "supervisord",
+    "Rspack",
+    "Flatpak",
+    "indexedDB",
+    "CUDA",
+    "clicky",
+    "corne",
+    "Uniqlo",
+    "craco",
+    "dunst",
+    "noice",
+    "Rsbuild",
+    "aabb"
+  ],
+  "version": "0.2"
+}
