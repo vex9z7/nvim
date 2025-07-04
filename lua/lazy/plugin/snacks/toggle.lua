@@ -75,7 +75,27 @@ local gitsigns_line_blame = {
     end,
 }
 
+local mini_diff_toggle_overlay = {
+    id = "mini_diff_toggle_overlay",
+    name = "Mini.diff toggle overlay",
+    get = function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        if vim.bo.buftype == "" and vim.api.nvim_buf_is_loaded(bufnr) then
+            return require("mini.diff").get_buf_data(bufnr).overlay
+        end
+        return false
+    end,
+    set = function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        if vim.bo.buftype == "" and vim.api.nvim_buf_is_loaded(bufnr) then
+            require("mini.diff").toggle_overlay(bufnr)
+        end
+    end,
+}
+
 Snacks.toggle.new(conform_global_autoformating_opts):map("<leader>tF")
 Snacks.toggle.new(conform_local_autoformating_opts):map("<leader>tf")
 
 Snacks.toggle.new(gitsigns_line_blame):map("<leader>tb")
+
+Snacks.toggle.new(mini_diff_toggle_overlay):map("<leader>to")
